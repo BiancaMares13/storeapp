@@ -2,3 +2,10 @@ server:
   port: 8080
   servel:
     context-path: /woodstories
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username:
+    password:

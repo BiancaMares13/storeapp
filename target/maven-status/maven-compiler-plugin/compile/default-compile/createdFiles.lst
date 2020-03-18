@@ -1,0 +1,5 @@
+ro\web\store\controller\UserController.class
+ro\web\store\service\UserService.class
+ro\web\store\StoreApplication.class
+ro\web\store\repository\UserRepository.class
+ro\web\store\model\User.class
