@@ -7,5 +7,5 @@ import ro.web.store.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-     String findByUsername(String username);
+     User findByUsername(String username);
 }
