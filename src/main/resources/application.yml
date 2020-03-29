@@ -1,6 +1,6 @@
 server:
-  port: 8080
-  servel:
+  port: 8090
+  servlet:
     context-path: /woodstories
 
 spring:
