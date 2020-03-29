@@ -1,3 +1,4 @@
+
 package ro.web.store.model;
 
 import javax.persistence.Column;
@@ -8,11 +9,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Product {
 
@@ -38,11 +36,12 @@ public class Product {
 	@Size(min = 3, max = 15)
 	private String productCategory;
 
-	public Product() {
-	}
+	public Product() {}
 
-	public Product(long id,String productName, String productDescription, long productPrice, String productPhotoLink,
-			String productCategory) {
+	public Product(long idProduct, String productName, String productDescription,
+		long productPrice, String productPhotoLink, String productCategory)
+	{
+		this.idProduct = idProduct;
 		this.productName = productName;
 		this.productDescription = productDescription;
 		this.productPrice = productPrice;

@@ -1,3 +1,4 @@
+
 package ro.web.store.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import ro.web.store.model.Product;
 
 import ro.web.store.service.ProductService;
 
-
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -23,12 +23,12 @@ public class ProductController {
 	@PostMapping("/addProduct")
 	public ResponseEntity<Product> addProduct(Product product) {
 		Product newProduct = productService.addProduct(product);
-		return new ResponseEntity<Product>(newProduct, HttpStatus.OK);
+		return new ResponseEntity<>(newProduct, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/deleteProduct")
 	public ResponseEntity<Product> deleteProduct(Product product) {
 		productService.deleteProduct(product);
-		return new ResponseEntity<Product>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

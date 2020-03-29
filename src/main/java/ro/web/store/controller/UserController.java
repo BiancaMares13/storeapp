@@ -1,3 +1,4 @@
+
 package ro.web.store.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,24 +14,24 @@ import ro.web.store.service.UserService;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    /**
-     * Endpoint
-     * mapeaza un request HTTP la metoda addUser
-     * @param u
-     * @return
-     */
-    @PostMapping( "/addUser")
-    public ResponseEntity addUser(User u){
-        User newUser = userService.addUser(u);
-       return  new ResponseEntity<User>(newUser, HttpStatus.OK);
-    }
-    @PostMapping( "/deleteUser")
-    public ResponseEntity deleteUser(User u){
-       // User newUser = userService.addUser(u);
-        return  new ResponseEntity<User>(HttpStatus.OK);
-    }
+	/**
+	 * Endpoint mapeaza un request HTTP la metoda addUser
+	 * 
+	 * @param u
+	 */
+	@PostMapping("/addUser")
+	public ResponseEntity<User> addUser(User u) {
+		User newUser = userService.addUser(u);
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
+	}
+
+	@PostMapping("/deleteUser")
+	public ResponseEntity<User> deleteUser(User u) {
+		// User newUser = userService.addUser(u);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }

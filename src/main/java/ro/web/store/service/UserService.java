@@ -1,3 +1,4 @@
+
 package ro.web.store.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,11 @@ import ro.web.store.repository.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    public User addUser(User u) {
-        u=new User("tes2t");
-        return userRepository.save(u);
-    }
+	public User addUser(User u) {
+		u = new User("tes2t");
+		return userRepository.save(u);
+	}
 }
