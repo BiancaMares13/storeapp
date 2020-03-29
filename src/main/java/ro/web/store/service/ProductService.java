@@ -8,11 +8,18 @@ import ro.web.store.repository.ProductRepository;
 
 @Service
 public class ProductService {
+
 	@Autowired
 	private ProductRepository productRepository;
 
+	Product product = new Product(3,"table", "small coffe table", 1000, "https://imgur.com/gallery/eHKcitf", "Tables");
+
+	
 	public Product addProduct(Product product) {
-		product = new Product("table", "small coffe table", 1000, "https://imgur.com/gallery/eHKcitf", "Tables");
-		return productRepository.save(product);
+		return productRepository.save(this.product);
+	}
+	
+	public void deleteProduct(Product product) {
+		productRepository.deleteById(this.product.getIdProduct());
 	}
 }

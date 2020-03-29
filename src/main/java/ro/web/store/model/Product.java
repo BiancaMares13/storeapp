@@ -5,14 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
 @Getter
 @Setter
 @Entity
@@ -43,7 +41,7 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String productName, String productDescription, long productPrice, String productPhotoLink,
+	public Product(long id,String productName, String productDescription, long productPrice, String productPhotoLink,
 			String productCategory) {
 		this.productName = productName;
 		this.productDescription = productDescription;
