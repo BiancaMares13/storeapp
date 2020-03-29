@@ -22,7 +22,7 @@ public class Product {
 	@Size(min = 3, max = 15)
 	private String productName;
 
-	@Column(unique = true)
+	@Column()
 	@Size(min = 3, max = 600)
 	private String productDescription;
 
