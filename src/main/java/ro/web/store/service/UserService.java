@@ -14,10 +14,18 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	User mockUser = new User(4,"testUserName", "qwerty123##ASD", "TestName", "TestSurname",
+	User mockUser = new User(1,"testUserName11", "qwerty123##ASD", "TestName", "TestSurname",
 		"testsurnametestname0@gmail.com", "Str.Test, nr 0, Ap 0", 0700700700);
 	
 	public User addUser(User user) {
 		return userRepository.save(mockUser);
+	}
+	
+	public User updateUser(User user) {
+		return userRepository.save(this.mockUser);
+	}
+
+	public void deleteUser(User user) {
+		userRepository.deleteById(this.mockUser.getIdUser());
 	}
 }
