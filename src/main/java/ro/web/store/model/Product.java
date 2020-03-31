@@ -16,7 +16,7 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idProduct;
+	private long id;
 
 	@Column(unique = true)
 	@Size(min = 3, max = 15)
@@ -38,10 +38,10 @@ public class Product {
 
 	public Product() {}
 
-	public Product(long idProduct, String productName, String productDescription,
+	public Product(long id, String productName, String productDescription,
 		long productPrice, String productPhotoLink, String productCategory)
 	{
-		this.idProduct = idProduct;
+		this.id = id;
 		this.productName = productName;
 		this.productDescription = productDescription;
 		this.productPrice = productPrice;
