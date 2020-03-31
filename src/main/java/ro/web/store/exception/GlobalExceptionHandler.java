@@ -2,6 +2,7 @@ package ro.web.store.exception;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +18,8 @@ public class GlobalExceptionHandler {
         return createResponseEntity(HttpStatus.NOT_FOUND,entityNotFoundException);
     }
 
-    private ResponseEntity createResponseEntity(HttpStatus httpStatus, Exception e){
-        return new ResponseEntity(new ApiError(httpStatus,e.getMessage()), httpStatus);
+    private ResponseEntity<ApiError> createResponseEntity(HttpStatus httpStatus, Exception e){
+        return new ResponseEntity<>(new ApiError(httpStatus,e.getMessage()), httpStatus);
     }
 
     @Data
