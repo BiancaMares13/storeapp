@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
-import ro.web.store.validator.UserValidator;
 
 import java.util.List;
 

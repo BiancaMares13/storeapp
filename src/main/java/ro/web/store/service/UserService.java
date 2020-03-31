@@ -18,20 +18,32 @@ public class UserService {
 	@Autowired
 	private UserValidator userValidator;
 
-	User mockUser = new User(1, "testUserName1111", "qwerty123##ASD", "TestName",
-		"TestSurname", "testsurnametestname0@gmail.com", "Str.Test, nr 0, Ap 0",
-		0700700700);
+	User mockUser = new User(1, "testUser__%%%%Name1111", "qwerty123##ASD",
+		"TestName", "TestSurname", "testsurnametestname0@gmail.com",
+		"Str.Test, nr 0, Ap 0", 0700700700);
 
 	public User addUser(User user) throws InvalidInputDataException {
-		if (!userValidator.isEmailValid(user.getEmail())) {
+		if (!userValidator.isEmailValid(mockUser.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
+		}
+		if (!userValidator.isUsernameValid(mockUser.getUsername())) {
+			throw new InvalidInputDataException("invalid username format!");
+		}
+		if (!userValidator.isUsernameUnique(mockUser.getUsername())) {
+			throw new InvalidInputDataException("usename is already used!");
 		}
 		return userRepository.save(mockUser);
 	}
 
 	public User updateUser(User user) throws InvalidInputDataException {
-		if (!userValidator.isEmailValid(user.getEmail())) {
+		if (!userValidator.isEmailValid(mockUser.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
+		}
+		if (!userValidator.isUsernameValid(mockUser.getUsername())) {
+			throw new InvalidInputDataException("invalid username format!");
+		}
+		if (!userValidator.isUsernameUnique(mockUser.getUsername())) {
+			throw new InvalidInputDataException("usename is already used!");
 		}
 		return userRepository.save(this.mockUser);
 	}
