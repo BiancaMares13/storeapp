@@ -1,16 +1,13 @@
 
 package ro.web.store.service;
 
-import com.sun.xml.bind.v2.model.core.ID;
-
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -33,11 +30,17 @@ public class ProductService {
 		productRepository.deleteById(this.mockProduct.getId());
 	}
 
-	public List<Product> findAllProducts() {
-		return productRepository.findAll();
+	public List<Product> findAllProducts() throws EntityNotFoundException {
+		List<Product> products = productRepository.findAll();
+		if(products.isEmpty()){
+			throw new EntityNotFoundException("Could not find any product in the database");
+		}
+		return products;
 	}
 
 	public List<Product> findByProductCategory(String productCategory) {
 		return productRepository.findByProductCategory(productCategory);
 	}
+
+
 }

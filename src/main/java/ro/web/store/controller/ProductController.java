@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.model.Product;
 
 import ro.web.store.service.ProductService;
@@ -45,7 +46,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/findAllProducts")
-	public ResponseEntity<List<Product>> findAllProducts() {
+	public ResponseEntity<List<Product>> findAllProducts() throws EntityNotFoundException {
 		List<Product> productList = productService.findAllProducts();
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
