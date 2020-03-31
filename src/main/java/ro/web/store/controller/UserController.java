@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.User;
 import ro.web.store.service.UserService;
 
@@ -23,9 +24,10 @@ public class UserController {
 	 * Endpoint mapeaza un request HTTP la metoda addUser
 	 * 
 	 * @param u
+	 * @throws InvalidInputDataException 
 	 */
 	@PostMapping("/addUser")
-	public ResponseEntity<User> addUser(User u) {
+	public ResponseEntity<User> addUser(User u) throws InvalidInputDataException {
 		User newUser = userService.addUser(u);
 		return new ResponseEntity<>(newUser, HttpStatus.OK);
 	}
