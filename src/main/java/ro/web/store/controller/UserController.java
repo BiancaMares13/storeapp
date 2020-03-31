@@ -33,7 +33,7 @@ public class UserController {
 	}
 
 	@PostMapping("/updateUser")
-	public ResponseEntity<User> updateProduct(User product) {
+	public ResponseEntity<User> updateUser(User product) throws InvalidInputDataException {
 		User newProduct = userService.updateUser(product);
 		return new ResponseEntity<>(newProduct, HttpStatus.OK);
 	}
