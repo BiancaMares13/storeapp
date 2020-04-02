@@ -1,14 +1,19 @@
 
 package ro.web.store.validator;
 
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import ro.web.store.repository.UserRepository;
 
 @Service
+@Slf4j
 public class UserValidator {
 
 	@Autowired
@@ -32,10 +37,24 @@ public class UserValidator {
 	}
 
 	public boolean isUsernameUnique(String username) {
-
-		if (userRepository.findByUsername(username) == null) 
-			return true;
+		if (userRepository.findByUsername(username) == null) return true;
 		return false;
+	}
+
+	public boolean isPhoneNumberValid(String phoneNumber) {
+		String phoneNumberRegex = "^(?=(?:[07]){2})(?=[0-9]{10}).*";
+
+		Pattern pat = Pattern.compile(phoneNumberRegex);
+		if (phoneNumber == null) return false;
+		return pat.matcher(phoneNumber).matches();
+	}
+
+	public String encryptPassword(String password) {
+		log.info("hashed Passt: ", Hashing.sha256().hashString(password, StandardCharsets.UTF_8)
+			.toString());
+		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8)
+			.toString();
+	
 	}
 
 }

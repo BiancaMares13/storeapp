@@ -1,10 +1,14 @@
 
 package ro.web.store.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -19,8 +23,7 @@ public class User {
 	@Size(min = 3, max = 30)
 	private String username;
 
-	@Column()
-	@Size(min = 3, max = 30)
+	@Column
 	private String password;
 
 	@Column()
@@ -40,12 +43,13 @@ public class User {
 	private String adress;
 
 	@Column
-	private long phoneNumber;
+	@Size(min = 10, max = 15)
+	private String phoneNumber;
 
 	public User() {}
 
 	public User(long idUser, String username, String password, String name,
-		String surname, String email, String adress, long phoneNumber)
+		String surname, String email, String adress, String phoneNumber)
 	{
 		this.idUser = idUser;
 		this.username = username;
