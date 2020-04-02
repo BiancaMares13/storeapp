@@ -22,48 +22,46 @@ public class UserService {
 	@Autowired
 	private UserUtils userUtils;
 
-	User mockUser = new User(1, "testUser999", "qwerty123##ASD", "TestName",
-		"TestSurname", "testsurnametestname0@gmail.com", "Str.Test, nr 0, Ap 0",
-		"0700700700");
+
 
 	public User addUser(User user) throws InvalidInputDataException {
-		if (!userValidator.isEmailValid(mockUser.getEmail())) {
+		if (!userValidator.isEmailValid(user.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
 		}
-		if (!userValidator.isUsernameValid(mockUser.getUsername())) {
+		if (!userValidator.isUsernameValid(user.getUsername())) {
 			throw new InvalidInputDataException("invalid username format!");
 		}
-		if (!userValidator.isUsernameUnique(mockUser.getUsername())) {
+		if (!userValidator.isUsernameUnique(user.getUsername())) {
 			throw new InvalidInputDataException("usename is already used!");
 		}
-		if (!userValidator.isPhoneNumberValid(mockUser.getPhoneNumber())) {
+		if (!userValidator.isPhoneNumberValid(user.getPhoneNumber())) {
 			throw new InvalidInputDataException("invalid phone number format!");
 		}
 
-		mockUser.setPassword(userUtils.encryptPassword(mockUser.getPassword()));
+		user.setPassword(userUtils.encryptPassword(user.getPassword()));
 
-		return userRepository.save(mockUser);
+		return userRepository.save(user);
 	}
 
 	public User updateUser(User user) throws InvalidInputDataException {
-		if (!userValidator.isEmailValid(mockUser.getEmail())) {
+		if (!userValidator.isEmailValid(user.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
 		}
-		if (!userValidator.isUsernameValid(mockUser.getUsername())) {
+		if (!userValidator.isUsernameValid(user.getUsername())) {
 			throw new InvalidInputDataException("invalid username format!");
 		}
-		if (!userValidator.isUsernameUnique(mockUser.getUsername())) {
+		if (!userValidator.isUsernameUnique(user.getUsername())) {
 			throw new InvalidInputDataException("usename is already used!");
 		}
-		if (!userValidator.isPhoneNumberValid(mockUser.getPhoneNumber())) {
+		if (!userValidator.isPhoneNumberValid(user.getPhoneNumber())) {
 			throw new InvalidInputDataException("invalid phone number format!");
 		}
 
-		return userRepository.save(this.mockUser);
+		return userRepository.save(user);
 	}
 
 	public void deleteUser(User user) {
-		userRepository.deleteById(this.mockUser.getIdUser());
+		userRepository.deleteById(user.getIdUser());
 	}
 
 	public User findByUsername(String username) {

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,13 +30,13 @@ public class UserController {
 	 * @throws InvalidInputDataException
 	 */
 	@PostMapping("/addUser")
-	public ResponseEntity<User> addUser(User u) throws InvalidInputDataException {
+	public ResponseEntity<User> addUser(@RequestBody User u) throws InvalidInputDataException {
 		User newUser = userService.addUser(u);
 		return new ResponseEntity<>(newUser, HttpStatus.OK);
 	}
 
 	@PostMapping("/updateUser")
-	public ResponseEntity<User> updateUser(User user)
+	public ResponseEntity<User> updateUser(@RequestBody User user)
 		throws InvalidInputDataException
 	{
 		User newUser = userService.updateUser(user);
@@ -43,7 +44,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/deleteUser")
-	public ResponseEntity<User> deleteUser(User user) {
+	public ResponseEntity<User> deleteUser(@RequestBody User user) {
 		userService.deleteUser(user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

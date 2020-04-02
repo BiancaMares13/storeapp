@@ -16,19 +16,16 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	Product mockProduct = new Product(4, "table11", "small coffe table", 1000,
-		"https://imgur.com/gallery/eHKcitf", "Chairs");
-
 	public Product addProduct(Product product) {
-		return productRepository.save(this.mockProduct);
+		return productRepository.save(product);
 	}
 
 	public Product updateProduct(Product product) {
-		return productRepository.save(this.mockProduct);
+		return productRepository.save(product);
 	}
 
 	public void deleteProduct(Product product) {
-		productRepository.deleteById(this.mockProduct.getId());
+		productRepository.deleteById(product.getId());
 	}
 
 	public List<Product> findAllProducts() throws EntityNotFoundException {
