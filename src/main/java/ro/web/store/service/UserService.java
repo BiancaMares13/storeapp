@@ -61,4 +61,12 @@ public class UserService {
 	public void deleteUser(User user) {
 		userRepository.deleteById(this.mockUser.getIdUser());
 	}
+	
+	public User findByUsername(String username) {
+		
+		User checkedUser = userRepository.findByUsername(username);
+		return checkedUser;
+	}
+	
+
 }

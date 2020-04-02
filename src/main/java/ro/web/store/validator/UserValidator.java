@@ -50,11 +50,11 @@ public class UserValidator {
 	}
 
 	public String encryptPassword(String password) {
-		log.info("hashed Passt: ", Hashing.sha256().hashString(password, StandardCharsets.UTF_8)
-			.toString());
 		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8)
 			.toString();
 	
 	}
+	
+
 
 }

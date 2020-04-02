@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.User;
@@ -24,7 +26,7 @@ public class UserController {
 	 * Endpoint mapeaza un request HTTP la metoda addUser
 	 * 
 	 * @param u
-	 * @throws InvalidInputDataException 
+	 * @throws InvalidInputDataException
 	 */
 	@PostMapping("/addUser")
 	public ResponseEntity<User> addUser(User u) throws InvalidInputDataException {
@@ -33,15 +35,30 @@ public class UserController {
 	}
 
 	@PostMapping("/updateUser")
-	public ResponseEntity<User> updateUser(User product) throws InvalidInputDataException {
-		User newProduct = userService.updateUser(product);
-		return new ResponseEntity<>(newProduct, HttpStatus.OK);
+	public ResponseEntity<User> updateUser(User user)
+		throws InvalidInputDataException
+	{
+		User newUser = userService.updateUser(user);
+		return new ResponseEntity<>(newUser, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteUser")
-	public ResponseEntity<User> deleteUser(User product) {
-		userService.deleteUser(product);
+	public ResponseEntity<User> deleteUser(User user) {
+		userService.deleteUser(user);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping("/login")
+	@ResponseBody
+	public ResponseEntity<User> login(@RequestParam String username,
+		@RequestParam String password)
+	{
+		User newUser = userService.findByUsername(username);
+
+		if (newUser.getPassword().contentEquals(password)) {
+			return new ResponseEntity<>(newUser, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 }
