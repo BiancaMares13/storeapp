@@ -1,19 +1,14 @@
 
 package ro.web.store.validator;
 
-import com.google.common.hash.Hashing;
-
-import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
 import ro.web.store.repository.UserRepository;
 
 @Service
-@Slf4j
 public class UserValidator {
 
 	@Autowired
@@ -48,13 +43,4 @@ public class UserValidator {
 		if (phoneNumber == null) return false;
 		return pat.matcher(phoneNumber).matches();
 	}
-
-	public String encryptPassword(String password) {
-		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8)
-			.toString();
-	
-	}
-	
-
-
 }

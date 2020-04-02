@@ -6,12 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
 import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
 
-@Slf4j
 @Service
 public class ProductService {
 
@@ -39,7 +37,6 @@ public class ProductService {
 			throw new EntityNotFoundException(
 				"Could not find any product in the database");
 		}
-		log.info("products test:", products);
 		return products;
 	}
 

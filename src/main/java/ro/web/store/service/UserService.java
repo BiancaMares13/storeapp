@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.User;
 import ro.web.store.repository.UserRepository;
+import ro.web.store.utils.UserUtils;
 import ro.web.store.validator.UserValidator;
 
 @Service
@@ -17,6 +18,9 @@ public class UserService {
 
 	@Autowired
 	private UserValidator userValidator;
+	
+	@Autowired
+	private UserUtils userUtils;
 
 	User mockUser = new User(1, "testUser999", "qwerty123##ASD", "TestName",
 		"TestSurname", "testsurnametestname0@gmail.com", "Str.Test, nr 0, Ap 0",
@@ -29,15 +33,15 @@ public class UserService {
 		if (!userValidator.isUsernameValid(mockUser.getUsername())) {
 			throw new InvalidInputDataException("invalid username format!");
 		}
-//		if (!userValidator.isUsernameUnique(mockUser.getUsername())) {
-//			throw new InvalidInputDataException("usename is already used!");
-//		}
+		if (!userValidator.isUsernameUnique(mockUser.getUsername())) {
+			throw new InvalidInputDataException("usename is already used!");
+		}
 		if (!userValidator.isPhoneNumberValid(mockUser.getPhoneNumber())) {
 			throw new InvalidInputDataException("invalid phone number format!");
 		}
 
-		mockUser.setPassword(userValidator.encryptPassword(mockUser.getPassword()));
-		
+		mockUser.setPassword(userUtils.encryptPassword(mockUser.getPassword()));
+
 		return userRepository.save(mockUser);
 	}
 
@@ -61,12 +65,10 @@ public class UserService {
 	public void deleteUser(User user) {
 		userRepository.deleteById(this.mockUser.getIdUser());
 	}
-	
+
 	public User findByUsername(String username) {
-		
 		User checkedUser = userRepository.findByUsername(username);
 		return checkedUser;
 	}
-	
 
 }
