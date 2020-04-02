@@ -48,10 +48,9 @@ public class User {
 
 	public User() {}
 
-	public User(long idUser, String username, String password, String name,
-		String surname, String email, String adress, String phoneNumber)
+	public User(String username, String password, String name, String surname,
+		String email, String adress, String phoneNumber)
 	{
-		this.idUser = idUser;
 		this.username = username;
 		this.password = password;
 		this.name = name;

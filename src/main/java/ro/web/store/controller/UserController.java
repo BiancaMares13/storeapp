@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.User;
+import ro.web.store.model.UserCredentials;
 import ro.web.store.service.UserService;
 
 @Controller
@@ -51,15 +51,14 @@ public class UserController {
 
 	@PostMapping("/login")
 	@ResponseBody
-	public ResponseEntity<User> login(@RequestParam String username,
-		@RequestParam String password)
+	public ResponseEntity<User> login(@RequestBody UserCredentials credentials)
 	{
-		User newUser = userService.findByUsername(username);
+		User newUser = userService.findByUsername(credentials.getUsername());
 
-		if (newUser.getPassword().contentEquals(password)) {
+		if (newUser.getPassword().contentEquals(credentials.getPassword())) {
 			return new ResponseEntity<>(newUser, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 }
