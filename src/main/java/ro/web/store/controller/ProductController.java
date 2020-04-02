@@ -49,7 +49,7 @@ public class ProductController {
 		List<Product> productList = productService.findAllProducts();
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
-	
+	 
 	@GetMapping("/findByProductCategory")
 	@ResponseBody
 	public ResponseEntity<List<Product>> findByProductCategory(@RequestParam String productCategory)
