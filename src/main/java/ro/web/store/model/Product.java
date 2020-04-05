@@ -1,17 +1,22 @@
 
 package ro.web.store.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "products")
 public class Product {
 
 	@Id
@@ -38,6 +43,9 @@ public class Product {
 
 	@Column
 	private long productStock;
+	
+	@ManyToMany(mappedBy = "productList")
+	private List<Order> orders;
 
 	public Product() {}
 
