@@ -36,10 +36,14 @@ public class Product {
 	@Size(min = 3, max = 15)
 	private String productCategory;
 
+	@Column
+	private long productStock;
+
 	public Product() {}
 
 	public Product(String productName, String productDescription,
-		long productPrice, String productPhotoLink, String productCategory)
+		long productPrice, String productPhotoLink, String productCategory,
+		long productStock)
 	{
 
 		this.productName = productName;
@@ -47,6 +51,7 @@ public class Product {
 		this.productPrice = productPrice;
 		this.productPhotoLink = productPhotoLink;
 		this.productCategory = productCategory;
+		this.productStock = productStock;
 	}
 
 }
