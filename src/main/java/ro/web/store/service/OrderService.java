@@ -21,6 +21,10 @@ public class OrderService {
 	@Autowired
 	private UserRepository userRepository;
 
+	public Order addOrder(Order order) {
+		return orderRepository.save(order);
+	}
+
 	public List<Order> findOrderByUser(long id) {
 
 		Optional<User> user = userRepository.findById(id);
