@@ -1,7 +1,7 @@
 
 package ro.web.store.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,6 +15,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -48,12 +52,14 @@ public class Order {
 	private double total;
 
 	@Column
-	private LocalDateTime completedOn;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(style = "yyyy-MM-dd HH:mm:ss")
+	private Date completedOn;
 
 	public Order() {}
 
 	public Order(String unic_identity_code, OrderStatus status, User user,
-		List<Product> productList, double total, LocalDateTime completedOn)
+		List<Product> productList, double total, Date completedOn)
 	{
 
 		this.unic_identity_code = unic_identity_code;
