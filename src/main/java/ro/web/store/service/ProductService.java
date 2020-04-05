@@ -2,6 +2,7 @@
 package ro.web.store.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,4 +42,7 @@ public class ProductService {
 		return productRepository.findByProductCategory(productCategory);
 	}
 
+	public Optional<Product> findProductById(long id) {
+		return productRepository.findById(id);
+	}
 }

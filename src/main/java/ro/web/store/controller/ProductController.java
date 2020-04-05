@@ -2,6 +2,7 @@
 package ro.web.store.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,16 +47,27 @@ public class ProductController {
 	}
 
 	@GetMapping("/findAllProducts")
-	public ResponseEntity<List<Product>> findAllProducts() throws EntityNotFoundException {
+	public ResponseEntity<List<Product>> findAllProducts()
+		throws EntityNotFoundException
+	{
 		List<Product> productList = productService.findAllProducts();
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
-	 
+
 	@GetMapping("/findByProductCategory")
 	@ResponseBody
-	public ResponseEntity<List<Product>> findByProductCategory(@RequestParam String productCategory)
+	public ResponseEntity<List<Product>> findByProductCategory(
+		@RequestParam String productCategory)
 	{
-		List<Product> productList = productService.findByProductCategory(productCategory);
+		List<Product> productList = productService.findByProductCategory(
+			productCategory);
 		return new ResponseEntity<>(productList, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<Object> findProductById(@PathVariable("id") long id) {
+		
+		Optional<Product> product = productService.findProductById(id);
+		return new ResponseEntity<>(product,HttpStatus.OK);
 	}
 }
