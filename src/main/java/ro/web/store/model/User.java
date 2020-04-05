@@ -46,10 +46,13 @@ public class User {
 	@Size(min = 10, max = 15)
 	private String phoneNumber;
 
+	@Column
+	private UserRole userRole;
+
 	public User() {}
 
 	public User(String username, String password, String name, String surname,
-		String email, String adress, String phoneNumber)
+		String email, String adress, String phoneNumber, UserRole userRole)
 	{
 		this.username = username;
 		this.password = password;
@@ -58,6 +61,7 @@ public class User {
 		this.email = email;
 		this.adress = adress;
 		this.phoneNumber = phoneNumber;
+		this.userRole = userRole;
 	}
 
 }
