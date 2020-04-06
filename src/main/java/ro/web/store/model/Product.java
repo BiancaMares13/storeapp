@@ -4,6 +4,7 @@ package ro.web.store.model;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,6 +48,10 @@ public class Product {
 	@ManyToMany(mappedBy = "productList")
 	private List<Order> orders;
 
+	@ElementCollection
+	private List<String> imageList;
+
+	
 	public Product() {}
 
 	public Product(String productName, String productDescription,
