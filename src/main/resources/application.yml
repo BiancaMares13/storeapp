@@ -1,15 +1,29 @@
 server:
-  port: 8090
-  servlet:
-    context-path: /woodstories
-
+   port: 8090
+   servlet:
+      context-path: /woodstories
 spring:
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/woodstories_schema
-    username: root
-    password: root
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
+   datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/woodstories_schema
+      username: root
+      password: root
+   jpa:
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate:
+         ddl-auto: update
+
+mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: testsurnametestname0@gmail.com
+    password: qwerty123456&&&
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
