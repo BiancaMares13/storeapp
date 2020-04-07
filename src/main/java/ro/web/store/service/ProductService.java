@@ -1,8 +1,10 @@
 
 package ro.web.store.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,4 +47,19 @@ public class ProductService {
 	public Optional<Product> findProductById(long id) {
 		return productRepository.findById(id);
 	}
+	
+	public Set<String> findAllProductCategories() throws EntityNotFoundException {
+		List<Product> products = productRepository.findAll();
+
+		Set<String> categories = new HashSet<>();
+		for (Product product : products) {
+			categories.add(product.getProductCategory());		
+		}
+		if (categories.isEmpty()) {
+			throw new EntityNotFoundException(
+				"Could not find any product categories in the database");
+		}
+		return categories;
+	}
+
 }
