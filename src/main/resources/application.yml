@@ -19,11 +19,7 @@ mail:
     username: testsurnametestname0@gmail.com
     password: qwerty123456&&&
     port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
     protocol: smtp
+    auth: true
+    starttls-enable: true
     test-connection: false

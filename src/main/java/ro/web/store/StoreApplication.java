@@ -6,9 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
+import ro.web.store.config.EmailConfig;
+
 @ComponentScan
 @SpringBootApplication
-@EnableConfigurationProperties
+@EnableConfigurationProperties(EmailConfig.class)
 public class StoreApplication {
 
 	public static void main(String[] args) {
