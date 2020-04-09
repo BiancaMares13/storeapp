@@ -25,7 +25,7 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 
-	public List<Order> findOrderByUser(long id) {
+	public List<Order> findOrdersByUser(long id) {
 
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) return orderRepository.findByUser(user.get());

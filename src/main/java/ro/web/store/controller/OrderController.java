@@ -33,7 +33,7 @@ public class OrderController {
 	public ResponseEntity<Object> findOrdersByUserId(
 		@PathVariable("id") long id)
 	{
-		List<Order> order = orderService.findOrderByUser(id);
+		List<Order> order = orderService.findOrdersByUser(id);
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
 
