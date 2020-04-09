@@ -44,11 +44,14 @@ public class ProductService {
 		return productRepository.findByProductCategory(productCategory);
 	}
 
-	public Product findProductById(long id) {
-		
+	public Product findProductById(long id) throws EntityNotFoundException {
+
 		Optional<Product> optionalProduct = productRepository.findById(id);
-		Product product = optionalProduct.get();
-		return product;
+		if (!optionalProduct.isPresent()) {
+			throw new EntityNotFoundException(
+				"Could not find any product in the database");
+		}
+		return optionalProduct.get();
 	}
 
 	public Set<String> findAllProductCategories() throws EntityNotFoundException {

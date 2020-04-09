@@ -109,7 +109,7 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	public void findProductByIdTest() {
+	public void findProductByIdTest() throws EntityNotFoundException {
 		when(productRepository.findById(0L)).thenReturn(Optional.of(new Product(
 			"masa", "masa mica", 10000, "link///photo", "mese", 5)));
 
