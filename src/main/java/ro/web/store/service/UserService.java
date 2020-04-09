@@ -18,11 +18,9 @@ public class UserService {
 
 	@Autowired
 	private UserValidator userValidator;
-	
+
 	@Autowired
 	private UserUtils userUtils;
-
-
 
 	public User addUser(User user) throws InvalidInputDataException {
 		if (!userValidator.isEmailValid(user.getEmail())) {
@@ -65,8 +63,7 @@ public class UserService {
 	}
 
 	public User findByUsername(String username) {
-		User checkedUser = userRepository.findByUsername(username);
-		return checkedUser;
+		return userRepository.findByUsername(username);
 	}
 
 }
