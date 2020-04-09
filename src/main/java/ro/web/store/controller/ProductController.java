@@ -2,7 +2,6 @@
 package ro.web.store.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,15 +65,17 @@ public class ProductController {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Object> findProductById(@PathVariable("id") long id) {
+	public ResponseEntity<Product> findProductById(@PathVariable("id") long id) {
 
-		Optional<Product> product = productService.findProductById(id);
+		Product product =productService.findProductById(id);
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
 
 	@GetMapping("/findAllCategories")
-	public ResponseEntity<Set<String>> findAllCategories() throws EntityNotFoundException {
-		
+	public ResponseEntity<Set<String>> findAllCategories()
+		throws EntityNotFoundException
+	{
+
 		Set<String> categoryList = productService.findAllProductCategories();
 		return new ResponseEntity<>(categoryList, HttpStatus.OK);
 	}

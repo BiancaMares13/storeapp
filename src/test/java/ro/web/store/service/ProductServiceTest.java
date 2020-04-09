@@ -2,7 +2,6 @@
 package ro.web.store.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -114,18 +113,17 @@ public class ProductServiceTest {
 		when(productRepository.findById(0L)).thenReturn(Optional.of(new Product(
 			"masa", "masa mica", 10000, "link///photo", "mese", 5)));
 
-		Optional<Product> product = productService.findProductById(0L);
+		Product product = productService.findProductById(0L);
 
-		assertTrue(product.isPresent());
-		assertEquals(0, product.get().getId());
-		assertEquals("masa", product.get().getProductName());
-		assertEquals("masa mica", product.get().getProductDescription());
-		assertEquals(10000, product.get().getProductPrice());
-		assertEquals("link///photo", product.get().getProductPhotoLink());
-		assertEquals("mese", product.get().getProductCategory());
-		assertEquals(5, product.get().getProductStock());
+		assertEquals(0, product.getId());
+		assertEquals("masa", product.getProductName());
+		assertEquals("masa mica", product.getProductDescription());
+		assertEquals(10000, product.getProductPrice());
+		assertEquals("link///photo", product.getProductPhotoLink());
+		assertEquals("mese", product.getProductCategory());
+		assertEquals(5, product.getProductStock());
 
-		verify(productRepository, times(1)).findById(product.get().getId());
+		verify(productRepository, times(1)).findById(product.getId());
 	}
 
 	@Test
