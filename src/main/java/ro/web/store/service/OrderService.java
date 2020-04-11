@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ro.web.store.model.Order;
+import ro.web.store.model.Product;
 import ro.web.store.model.User;
 import ro.web.store.repository.OrderRepository;
+import ro.web.store.repository.ProductRepository;
 import ro.web.store.repository.UserRepository;
 
 @Service
@@ -21,7 +23,20 @@ public class OrderService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private ProductRepository productRepository;
+
 	public Order addOrder(Order order) {
+
+		List<Product> productList = order.getProductList();
+
+		for (Product product : productList) {
+			Product productById = productRepository.findById(product.getId()).get();
+
+			productById.setProductStock(productById.getProductStock() - 1);
+			productRepository.save(productById);
+		}
+
 		return orderRepository.save(order);
 	}
 
