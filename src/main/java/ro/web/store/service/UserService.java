@@ -1,6 +1,8 @@
 
 package ro.web.store.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,11 @@ public class UserService {
 		user.setPassword(userUtils.encryptPassword(user.getPassword()));
 
 		return userRepository.save(user);
+	}
+
+	public User findByUserId(long id) {
+		Optional<User> user = userRepository.findById(id);
+		return user.get();
 	}
 
 	public User updateUser(User user) throws InvalidInputDataException {
