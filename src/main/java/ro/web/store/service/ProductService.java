@@ -27,8 +27,8 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 
-	public void deleteProduct(Product product) {
-		productRepository.deleteById(product.getId());
+	public void deleteProductById(long id) {
+		productRepository.deleteById(id);
 	}
 
 	public List<Product> findAllProducts() throws EntityNotFoundException {

@@ -3,7 +3,7 @@ package ro.web.store.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class MockMVCUtils {
+public class MockMvcUtils {
 
 	public static String asJsonString(final Object obj) {
 		try {
