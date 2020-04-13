@@ -53,7 +53,7 @@ public class Order {
 
 	@Column
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(style = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(style = "yyyy-MM-dd")
 	private Date completedOn;
 
 	public Order() {}

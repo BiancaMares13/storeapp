@@ -26,12 +26,11 @@ public class OrderController {
 	@PostMapping("/addOrder")
 	public ResponseEntity<Order> addOrder(@RequestBody Order order) {
 		Order newOrder = orderService.addOrder(order);
-		return new ResponseEntity<>(newOrder, HttpStatus.OK);
+		return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Object> findOrdersByUserId(
-		@PathVariable("id") long id)
+	public ResponseEntity<List<Order>> findOrdersByUserId(@PathVariable("id") long id)
 	{
 		List<Order> order = orderService.findOrdersByUser(id);
 		return new ResponseEntity<>(order, HttpStatus.OK);
