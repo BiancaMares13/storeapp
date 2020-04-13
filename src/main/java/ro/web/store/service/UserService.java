@@ -65,8 +65,8 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public void deleteUser(User user) {
-		userRepository.deleteById(user.getId());
+	public void deleteUserById(long id) {
+		userRepository.deleteById(id);
 	}
 
 	public User findByUsername(String username) {
