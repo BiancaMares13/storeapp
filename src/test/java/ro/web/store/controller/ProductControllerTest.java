@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.OrderRepository;
 import ro.web.store.repository.ProductRepository;
@@ -154,7 +155,16 @@ public class ProductControllerTest {
       .andExpect(jsonPath("$[2].productStock").value(5));			
 	}
 	
-	
+	@Test
+	public void findAllProductsAPI_NegativTest() throws Exception {
+				
+		when(productService.findAllProducts()).thenThrow(EntityNotFoundException.class);
+		
+    mockMvc.perform(get("/products/findAllProducts")
+			.accept(MediaType.APPLICATION_JSON))    
+		  .andExpect(status().isNotFound());
+	} 
+
 	
 	@Test
 	public void findByProductCategoryAPITest() throws Exception {
@@ -214,8 +224,19 @@ public class ProductControllerTest {
       .andExpect(jsonPath("$.productPhotoLink").value("link///photo"))		
       .andExpect(jsonPath("$.productCategory").value("mese"))
       .andExpect(jsonPath("$.productStock").value(5));	
-
 	}
+	
+	@Test
+	public void findProductByIdAPI_NegativTest() throws Exception {
+				
+		when(productService.findProductById(0)).thenThrow(EntityNotFoundException.class);
+		
+    mockMvc.perform(get("/products/{id}", 0)
+			.accept(MediaType.APPLICATION_JSON))    
+		  .andExpect(status().isNotFound());
+	} 
+
+	
 	
 	@Test
 	public void findAllProductCategoriesAPITest() throws Exception {
@@ -238,5 +259,16 @@ public class ProductControllerTest {
 	    .andExpect(jsonPath("$[0]").value("masa"))
       .andExpect(jsonPath("$[1]").value("scaun"));	
 	} 
+	
+	@Test
+	public void findAllProductCategoriesAPI_NegativTest() throws Exception {
+				
+		when(productService.findAllProductCategories()).thenThrow(EntityNotFoundException.class);
+		
+    mockMvc.perform(get("/products/findAllCategories")
+			.accept(MediaType.APPLICATION_JSON))    
+		  .andExpect(status().isNotFound());
+	} 
+
 
 }
