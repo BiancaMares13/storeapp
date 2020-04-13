@@ -122,7 +122,17 @@ public class ProductServiceTest {
 
 		verify(productRepository, times(1)).findById(product.getId());
 	}
+	
+	@Test(expected = EntityNotFoundException.class)
+	public void findProductById_NegativTest() throws EntityNotFoundException {
+			
+		when(productRepository.findById(0L)).thenReturn(Optional.ofNullable(null));
 
+		Product product = productService.findProductById(0L);
+
+		verify(productRepository, times(1)).findById(product.getId());
+	}
+ 
 	@Test
 	public void findAllProductCategoriesTest() throws EntityNotFoundException {
 
