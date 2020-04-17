@@ -15,14 +15,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Description;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ro.web.store.exception.EntityNotFoundException;
@@ -33,8 +32,8 @@ import ro.web.store.repository.UserRepository;
 import ro.web.store.service.ProductService;
 import ro.web.store.utils.MockMvcUtils;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest()
+@DisplayName("Product Controller Test")
 public class ProductControllerTest {
 
 	@Autowired

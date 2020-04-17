@@ -6,13 +6,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import io.qameta.allure.Description;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,6 +25,7 @@ import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
 
+@DisplayName("Product Service Test")
 public class ProductServiceTest {
 
 	@InjectMocks
@@ -29,12 +34,14 @@ public class ProductServiceTest {
 	@Mock
 	ProductRepository productRepository;
 
-	@Before
+	@BeforeEach
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
+	@Description("We create a simple mock Product and check if it was succesfully added into the database")
+	@DisplayName("Test: A product was succesfully added into the Database")
 	public void addProductTest() {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
@@ -46,6 +53,8 @@ public class ProductServiceTest {
 	}
 
 	@Test
+
+	@Description("Test")
 	public void updateProductTest() {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
@@ -84,14 +93,15 @@ public class ProductServiceTest {
 		verify(productRepository, times(1)).findAll();
 	}
 
-	@Test(expected = EntityNotFoundException.class)
-	public void findAllProducts_EntityNotFoundExceptionTest()
-		throws EntityNotFoundException
-	{
+	@Test
+	public void findAllProducts_EntityNotFoundExceptionTest() {
 		List<Product> productList = new ArrayList<>();
 		when(productRepository.findAll()).thenReturn(productList);
-		// test
-		productService.findAllProducts();
+
+		Assertions.assertThrows(EntityNotFoundException.class, () -> {
+			productService.findAllProducts();
+		});
+
 	}
 
 	@Test
@@ -122,17 +132,17 @@ public class ProductServiceTest {
 
 		verify(productRepository, times(1)).findById(product.getId());
 	}
-	
-	@Test(expected = EntityNotFoundException.class)
-	public void findProductById_NegativTest() throws EntityNotFoundException {
-			
+
+	@Test
+	public void findProductById_NegativTest(){
 		when(productRepository.findById(0L)).thenReturn(Optional.ofNullable(null));
+	
+		Assertions.assertThrows(EntityNotFoundException.class, () -> {
+			productService.findProductById(0L);
+		});
 
-		Product product = productService.findProductById(0L);
-
-		verify(productRepository, times(1)).findById(product.getId());
 	}
- 
+
 	@Test
 	public void findAllProductCategoriesTest() throws EntityNotFoundException {
 
@@ -160,14 +170,15 @@ public class ProductServiceTest {
 
 	}
 
-	@Test(expected = EntityNotFoundException.class)
+	@Test
 	public void findAllProductCategories_EntityNotFoundExceptionTest()
-		throws EntityNotFoundException
 	{
 		List<Product> productList = new ArrayList<>();
-
 		when(productRepository.findAll()).thenReturn(productList);
+		
+		Assertions.assertThrows(EntityNotFoundException.class, () -> {
 		productService.findAllProductCategories();
+		});
 
 	}
 }

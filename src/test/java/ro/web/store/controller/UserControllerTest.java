@@ -9,13 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ro.web.store.exception.InvalidInputDataException;
@@ -28,8 +27,9 @@ import ro.web.store.repository.UserRepository;
 import ro.web.store.service.UserService;
 import ro.web.store.utils.MockMvcUtils;
 
-@RunWith(SpringRunner.class)
+
 @WebMvcTest()
+@DisplayName("User Controller Test")
 public class UserControllerTest {
 	
 	@Autowired
