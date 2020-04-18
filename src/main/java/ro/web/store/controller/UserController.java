@@ -18,6 +18,7 @@ import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.model.User;
 import ro.web.store.model.UserCredentials;
+import ro.web.store.model.UserRole;
 import ro.web.store.service.UserService;
 
 @Controller
@@ -35,7 +36,8 @@ public class UserController {
 	 */
 	@PostMapping("/addUser")
 	public ResponseEntity<User> addUser(@RequestBody User u) throws InvalidInputDataException {
-		User newUser = userService.addUser(u);
+	  u.setUserRole(UserRole.ROLE_USER);
+		User newUser =	userService.addUser(u);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 
