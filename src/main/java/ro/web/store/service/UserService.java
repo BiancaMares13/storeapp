@@ -85,7 +85,19 @@ public class UserService {
 		}
 		updatedFavoriteProductList.add(product);
 		user.setFavoriteProductList(updatedFavoriteProductList);
-		
+
+		return userRepository.save(user);
+	}
+
+	public User removeProductFromFavorites(long id, Product product) {
+		User user = findByUserId(id);
+		List<Product> updatedFavoriteProductList = new ArrayList<>();
+
+		if (!user.getFavoriteProductList().equals(null)) {
+			updatedFavoriteProductList = user.getFavoriteProductList();
+			updatedFavoriteProductList.remove(product);
+			user.setFavoriteProductList(updatedFavoriteProductList);
+		}
 		return userRepository.save(user);
 	}
 

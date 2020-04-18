@@ -84,4 +84,11 @@ public class UserController {
 		User user =	userService.addProductToFavorites(id, product);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+	
+	@PostMapping("/removeFavorite/{id}")
+	@ResponseBody
+	public ResponseEntity<User> removeProductFromFavorites(@PathVariable("id") long id,@RequestBody Product product){
+		User user =	userService.removeProductFromFavorites(id, product);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
 }
