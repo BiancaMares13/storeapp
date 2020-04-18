@@ -1,12 +1,15 @@
 
 package ro.web.store.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ro.web.store.exception.InvalidInputDataException;
+import ro.web.store.model.Product;
 import ro.web.store.model.User;
 import ro.web.store.repository.UserRepository;
 import ro.web.store.utils.UserUtils;
@@ -71,6 +74,19 @@ public class UserService {
 
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	public User addProductToFavorites(long id, Product product) {
+		User user = findByUserId(id);
+		List<Product> updatedFavoriteProductList = new ArrayList<>();
+
+		if (!user.getFavoriteProductList().equals(null)) {
+			updatedFavoriteProductList = user.getFavoriteProductList();
+		}
+		updatedFavoriteProductList.add(product);
+		user.setFavoriteProductList(updatedFavoriteProductList);
+		
+		return userRepository.save(user);
 	}
 
 }

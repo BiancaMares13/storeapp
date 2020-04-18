@@ -58,6 +58,10 @@ public class User {
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
       cascade = CascadeType.ALL)
   private List<Order> order;
+  
+  @OneToMany(  cascade = CascadeType.ALL,
+      orphanRemoval = true)
+	private List<Product> favoriteProductList;
 
 	public User() {}
 

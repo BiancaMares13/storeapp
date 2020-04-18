@@ -77,4 +77,11 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
+	
+	@PostMapping("/addFavorite/{id}")
+	@ResponseBody
+	public ResponseEntity<User> addProductToFavorites(@PathVariable("id") long id,@RequestBody Product product){
+		User user =	userService.addProductToFavorites(id, product);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
 }
