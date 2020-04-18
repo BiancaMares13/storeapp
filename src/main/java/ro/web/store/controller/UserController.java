@@ -1,6 +1,8 @@
 
 package ro.web.store.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +37,11 @@ public class UserController {
 	 * @throws InvalidInputDataException
 	 */
 	@PostMapping("/addUser")
-	public ResponseEntity<User> addUser(@RequestBody User u) throws InvalidInputDataException {
-	  u.setUserRole(UserRole.ROLE_USER);
-		User newUser =	userService.addUser(u);
+	public ResponseEntity<User> addUser(@RequestBody User u)
+		throws InvalidInputDataException
+	{
+		u.setUserRole(UserRole.ROLE_USER);
+		User newUser = userService.addUser(u);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 
@@ -50,25 +54,23 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Product> deleteProductById(@PathVariable("id") long id){
+	public ResponseEntity<Product> deleteProductById(
+		@PathVariable("id") long id)
+	{
 		userService.deleteUserById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/findByUserId")
 	@ResponseBody
-	public ResponseEntity<User> findByUserId(
-		@RequestParam long id)
-	{
+	public ResponseEntity<User> findByUserId(@RequestParam long id) {
 		User user = userService.findByUserId(id);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	
 	@PostMapping("/login")
 	@ResponseBody
-	public ResponseEntity<User> login(@RequestBody UserCredentials credentials)
-	{
+	public ResponseEntity<User> login(@RequestBody UserCredentials credentials) {
 		User newUser = userService.findByUsername(credentials.getUsername());
 
 		if (newUser.getPassword().contentEquals(credentials.getPassword())) {
@@ -77,18 +79,28 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
-	
 	@PostMapping("/addFavorite/{id}")
 	@ResponseBody
-	public ResponseEntity<User> addProductToFavorites(@PathVariable("id") long id,@RequestBody Product product){
-		User user =	userService.addProductToFavorites(id, product);
+	public ResponseEntity<User> addProductToFavorites(@PathVariable("id") long id,
+		@RequestBody Product product)
+	{
+		User user = userService.addProductToFavorites(id, product);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/removeFavorite/{id}")
 	@ResponseBody
-	public ResponseEntity<User> removeProductFromFavorites(@PathVariable("id") long id,@RequestBody Product product){
-		User user =	userService.removeProductFromFavorites(id, product);
+	public ResponseEntity<User> removeProductFromFavorites(
+		@PathVariable("id") long id, @RequestBody Product product)
+	{
+		User user = userService.removeProductFromFavorites(id, product);
 		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+
+	@GetMapping("/getAllFavoritesProduts")
+	@ResponseBody
+	public ResponseEntity<List<Product>> getAllFavoritesProduts(@RequestParam long id) {
+		List<Product> products = userService.getAllFavoriteProducts(id);
+		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 }

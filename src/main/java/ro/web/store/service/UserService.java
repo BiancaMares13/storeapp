@@ -101,4 +101,9 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	public List<Product> getAllFavoriteProducts(long id) {
+		User user = findByUserId(id);
+		return user.getFavoriteProductList();
+	}
+	
 }
