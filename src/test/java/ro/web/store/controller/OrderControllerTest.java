@@ -68,10 +68,11 @@ public class OrderControllerTest {
 		productList.add(product);	
 		productList.add(product2);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		
 		Order order = new Order("1", OrderStatus.DONE, user,
-			productList, 10000.0, sdf.parse("2020-11-11"));
+			productList, 10000.0, sdf.parse("2020-11-11 12:12:12"));
 		
 		return order;
 	}
@@ -99,7 +100,7 @@ public class OrderControllerTest {
       .andExpect(jsonPath("$.productList[1].productName").value("masa de cafeaua"))		
       .andExpect(jsonPath("$.productList[1].productDescription").value("masa mare"))
 	    .andExpect(jsonPath("$.total").value(10000))	
-	    .andExpect(jsonPath("$.completedOn").value("2020-11-10T22:00:00.000+0000"));	
+	    .andExpect(jsonPath("$.completedOn").value("2020-11-11T12:12:12.000+0000"));	
 	}
 	
 	@Test
@@ -128,7 +129,7 @@ public class OrderControllerTest {
       .andExpect(jsonPath("$[0].productList[1].productName").value("masa de cafeaua"))		
       .andExpect(jsonPath("$[0].productList[1].productDescription").value("masa mare"))
 	    .andExpect(jsonPath("$[0].total").value(10000))	
-	    .andExpect(jsonPath("$[0].completedOn").value("2020-11-10T22:00:00.000+0000"));
+	    .andExpect(jsonPath("$[0].completedOn").value("2020-11-11T12:12:12.000+0000"));
 	} 
 	
 }
