@@ -36,6 +36,12 @@ public class UserValidator {
 		return false;
 	}
 
+	public boolean isUserDataSizeCorrect(String userData) {
+	if(userData.length()< 3 ||userData.length()> 30)	
+		return false;
+	return true;
+	}
+	
 	public boolean isPhoneNumberValid(String phoneNumber) {
 		String phoneNumberRegex = "^(?=(?:[07]){2})(?=[0-9]{10}).*";
 

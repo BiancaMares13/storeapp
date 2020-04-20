@@ -38,6 +38,15 @@ public class UserService {
 		if (!userValidator.isUsernameUnique(user.getUsername())) {
 			throw new InvalidInputDataException("usename is already used!");
 		}
+		if (!userValidator.isUserDataSizeCorrect(user.getUsername())) {
+			throw new InvalidInputDataException("Username has to be between 3 and 30 characters long!");
+		}
+		if (!userValidator.isUserDataSizeCorrect(user.getName())) {
+			throw new InvalidInputDataException("Name has to be between 3 and 30 characters long!");
+		}
+		if (!userValidator.isUserDataSizeCorrect(user.getSurname())) {
+			throw new InvalidInputDataException("Surname has to be between 3 and 30 characters long!");
+		}
 		if (!userValidator.isPhoneNumberValid(user.getPhoneNumber())) {
 			throw new InvalidInputDataException("invalid phone number format!");
 		}
