@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ro.web.store.exception.DuplicateEntryException;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.model.User;
@@ -76,14 +77,18 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 
-	public User addProductToFavorites(long id, Product product) {
+	public User addProductToFavorites(long id, Product product) throws DuplicateEntryException {
 		User user = findByUserId(id);
 		List<Product> updatedFavoriteProductList = new ArrayList<>();
 
 		if (!user.getFavoriteProductList().equals(null)) {
 			updatedFavoriteProductList = user.getFavoriteProductList();
 		}
-		updatedFavoriteProductList.add(product);
+		if(!updatedFavoriteProductList.contains(product)) {
+			updatedFavoriteProductList.add(product);
+		}else {
+			throw new DuplicateEntryException("Product already added to Favorites!");
+		}
 		user.setFavoriteProductList(updatedFavoriteProductList);
 
 		return userRepository.save(user);

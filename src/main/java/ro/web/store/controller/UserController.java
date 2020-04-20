@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ro.web.store.exception.DuplicateEntryException;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.model.User;
@@ -82,7 +83,7 @@ public class UserController {
 	@PostMapping("/addFavorite/{id}")
 	@ResponseBody
 	public ResponseEntity<User> addProductToFavorites(@PathVariable("id") long id,
-		@RequestBody Product product)
+		@RequestBody Product product) throws  DuplicateEntryException
 	{
 		User user = userService.addProductToFavorites(id, product);
 		return new ResponseEntity<>(user, HttpStatus.OK);
