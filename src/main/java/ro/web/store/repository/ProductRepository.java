@@ -12,4 +12,6 @@ import ro.web.store.model.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	List<Product> findByProductCategory(String productCategory);
+	
+	Product findByProductName(String productname);
 }

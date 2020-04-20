@@ -25,7 +25,7 @@ public class Product {
 	private long id;
 
 	@Column(unique = true)
-	@Size(min = 3, max = 15)
+	@Size(min = 3, max = 30)
 	private String productName;
 
 	@Column()
@@ -39,7 +39,7 @@ public class Product {
 	private String productPhotoLink;
 
 	@Column
-	@Size(min = 3, max = 15)
+	@Size(min = 3, max = 30)
 	private String productCategory;
 
 	@Column

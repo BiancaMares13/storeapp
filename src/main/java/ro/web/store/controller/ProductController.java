@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.web.store.exception.EntityNotFoundException;
+import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.service.ProductService;
 
@@ -29,13 +30,13 @@ public class ProductController {
 	private ProductService productService;
 
 	@PostMapping("/addProduct")
-	public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+	public ResponseEntity<Product> addProduct(@RequestBody Product product) throws InvalidInputDataException {
 		Product newProduct = productService.addProduct(product);
 		return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/updateProduct")
-	public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+	public ResponseEntity<Product> updateProduct(@RequestBody Product product) throws InvalidInputDataException {
 		Product newProduct = productService.updateProduct(product);
 		return new ResponseEntity<>(newProduct, HttpStatus.OK);
 	}

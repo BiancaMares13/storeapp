@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ro.web.store.exception.EntityNotFoundException;
+import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
 
@@ -42,7 +43,7 @@ public class ProductServiceTest {
 	@Test
 	@Description("We create a simple mock Product and check if it was succesfully added into the database")
 	@DisplayName("Test: A product was succesfully added into the Database")
-	public void addProductTest() {
+	public void addProductTest() throws InvalidInputDataException {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
 			"mese", 5);
@@ -55,7 +56,7 @@ public class ProductServiceTest {
 	@Test
 
 	@Description("Test")
-	public void updateProductTest() {
+	public void updateProductTest() throws InvalidInputDataException {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
 			"mese", 5);
