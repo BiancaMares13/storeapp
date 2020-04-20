@@ -36,8 +36,8 @@ public class UserValidator {
 		return false;
 	}
 
-	public boolean isUserDataSizeCorrect(String userData) {
-	if(userData.length()< 3 ||userData.length()> 30)	
+	public boolean isUserDataSizeCorrect(String userData, int min, int max) {
+	if(userData.length()< min ||userData.length()> max)	
 		return false;
 	return true;
 	}
