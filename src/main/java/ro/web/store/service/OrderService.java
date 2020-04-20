@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ro.web.store.model.Order;
+import ro.web.store.model.OrderStatus;
 import ro.web.store.model.Product;
 import ro.web.store.model.User;
 import ro.web.store.repository.OrderRepository;
@@ -45,5 +46,15 @@ public class OrderService {
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) return orderRepository.findByUser(user.get());
 		return null;
+	}
+	
+	public Order updateOrderStatus(long id,OrderStatus orderStatus) {
+		
+		Optional<Order> order = orderRepository.findById(id);
+		if(!orderStatus.equals(order.get().getStatus())) {
+			order.get().setStatus(orderStatus);
+		}
+		
+		return orderRepository.save(order.get());	
 	}
 }

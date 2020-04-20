@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.web.store.model.Order;
+import ro.web.store.model.OrderStatus;
 import ro.web.store.service.OrderService;
 
 @Controller
@@ -36,4 +38,12 @@ public class OrderController {
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
 
+	@PostMapping(path = "/updateOrderStatus/{id}")
+	@ResponseBody
+	public ResponseEntity<Order> updateOrderStatus(@PathVariable("id") long id, @RequestBody OrderStatus orderStatus)
+	{
+		Order order = orderService.updateOrderStatus(id, orderStatus);
+		return new ResponseEntity<>(order, HttpStatus.OK);
+	}
+	
 }
