@@ -46,4 +46,10 @@ public class OrderController {
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
 	
+	@PostMapping(path = "/geAllOrdersByUserId/{id}")
+	public ResponseEntity<List<Order>> geAllOrdersByUserId(@PathVariable("id") long id)
+	{
+		List<Order> order = orderService.geAllOrdersByUserId(id);
+		return new ResponseEntity<>(order, HttpStatus.OK);
+	}
 }

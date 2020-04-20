@@ -47,14 +47,22 @@ public class OrderService {
 		if (user.isPresent()) return orderRepository.findByUser(user.get());
 		return null;
 	}
-	
-	public Order updateOrderStatus(long id,OrderStatus orderStatus) {
-		
+
+	public Order updateOrderStatus(long id, OrderStatus orderStatus) {
+
 		Optional<Order> order = orderRepository.findById(id);
-		if(!orderStatus.equals(order.get().getStatus())) {
+		if (!orderStatus.equals(order.get().getStatus())) {
 			order.get().setStatus(orderStatus);
 		}
-		
-		return orderRepository.save(order.get());	
+
+		return orderRepository.save(order.get());
 	}
+
+	public List<Order> geAllOrdersByUserId(long id) {
+
+		Optional<User> user = userRepository.findById(id);
+
+		return orderRepository.findByUser(user.get());
+	}
+
 }
