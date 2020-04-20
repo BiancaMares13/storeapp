@@ -57,7 +57,7 @@ public class UserService {
 
 		if (!userValidator.isUserDataSizeCorrect(user.getAdress(), 3, 300)) {
 			throw new InvalidInputDataException(
-				"Adress has to be between 3 and 30 characters long!");
+				"Adress has to be between 3 and 300 characters long!");
 		}
 		if (!userValidator.isPhoneNumberValid(user.getPhoneNumber())) {
 			throw new InvalidInputDataException("invalid phone number format!");
