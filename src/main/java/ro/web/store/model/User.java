@@ -59,8 +59,7 @@ public class User {
       cascade = CascadeType.ALL)
   private List<Order> order;
   
-  @OneToMany(  cascade = CascadeType.ALL,
-      orphanRemoval = true)
+  @OneToMany()
 	private List<Product> favoriteProductList;
 
 	public User() {}
