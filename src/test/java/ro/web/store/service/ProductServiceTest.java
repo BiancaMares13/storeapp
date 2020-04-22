@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -25,6 +26,7 @@ import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
+import ro.web.store.validator.ProductValidator;
 
 @DisplayName("Product Service Test")
 public class ProductServiceTest {
@@ -34,6 +36,9 @@ public class ProductServiceTest {
 
 	@Mock
 	ProductRepository productRepository;
+
+	@Mock
+	ProductValidator productValidator;
 
 	@BeforeEach
 	public void init() {
@@ -48,6 +53,12 @@ public class ProductServiceTest {
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
 			"mese", 5);
 
+		when(productValidator.isProductnameUnique(ArgumentMatchers.anyString()))
+			.thenReturn(true);
+
+		when(productValidator.isProductDataSizeCorrect(ArgumentMatchers.anyString(),
+			ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())).thenReturn(true);
+
 		productService.addProduct(product);
 
 		verify(productRepository, times(1)).save(product);
@@ -60,6 +71,12 @@ public class ProductServiceTest {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
 			"mese", 5);
+		
+		when(productValidator.isProductnameUnique(ArgumentMatchers.anyString()))
+		.thenReturn(true);
+
+	 when(productValidator.isProductDataSizeCorrect(ArgumentMatchers.anyString(),
+		ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())).thenReturn(true);
 
 		productService.updateProduct(product);
 		verify(productRepository, times(1)).save(product);
@@ -135,9 +152,9 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	public void findProductById_NegativTest(){
+	public void findProductById_NegativTest() {
 		when(productRepository.findById(0L)).thenReturn(Optional.ofNullable(null));
-	
+
 		Assertions.assertThrows(EntityNotFoundException.class, () -> {
 			productService.findProductById(0L);
 		});
@@ -172,13 +189,12 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	public void findAllProductCategories_EntityNotFoundExceptionTest()
-	{
+	public void findAllProductCategories_EntityNotFoundExceptionTest() {
 		List<Product> productList = new ArrayList<>();
 		when(productRepository.findAll()).thenReturn(productList);
-		
+
 		Assertions.assertThrows(EntityNotFoundException.class, () -> {
-		productService.findAllProductCategories();
+			productService.findAllProductCategories();
 		});
 
 	}
