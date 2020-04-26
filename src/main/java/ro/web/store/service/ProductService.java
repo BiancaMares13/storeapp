@@ -93,7 +93,6 @@ public class ProductService {
 
 	public List<Product> findAllProducts() throws EntityNotFoundException {
 		List<Product> products = productRepository.findAll();
-		products.stream().forEach(product -> product.setOrders(null)); //setting here to null so we can not have circular dependency
 		if (products.isEmpty()) {
 			throw new EntityNotFoundException(
 				"Could not find any product in the database");

@@ -44,9 +44,7 @@ public class Product {
 
 	@Column
 	private long productStock;
-	
-	@ManyToMany(mappedBy = "productList")
-	private List<Order> orders;
+
 
 	@ElementCollection
 	private List<String> imageList;

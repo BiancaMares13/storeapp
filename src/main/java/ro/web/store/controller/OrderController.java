@@ -34,8 +34,11 @@ public class OrderController {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<List<Order>> findOrdersByUserId(@PathVariable("id") long id)
 	{
-		List<Order> order = orderService.findOrdersByUser(id);
-		return new ResponseEntity<>(order, HttpStatus.OK);
+		List<Order> orders = orderService.findOrdersByUser(id);
+		for(Order o: orders){
+			o.setUser(null);
+		}
+		return new ResponseEntity<>(orders, HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/updateOrderStatus/{id}")
