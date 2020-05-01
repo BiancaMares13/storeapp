@@ -12,6 +12,7 @@ import ro.web.store.exception.DuplicateEntryException;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
 import ro.web.store.model.User;
+import ro.web.store.repository.ProductRepository;
 import ro.web.store.repository.UserRepository;
 import ro.web.store.utils.UserUtils;
 import ro.web.store.validator.UserValidator;
@@ -21,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+  @Autowired
+  private ProductRepository productRepository;
 
 	@Autowired
 	private UserValidator userValidator;
@@ -108,10 +112,13 @@ public class UserService {
 		User user = findByUserId(id);
 		List<Product> updatedFavoriteProductList = new ArrayList<>();
 
+	long newId =	product.getId();
+	productRepository.findById(newId);
+
 		if (!user.getFavoriteProductList().equals(null)) {
 			updatedFavoriteProductList = user.getFavoriteProductList();
 		}
-		if (!updatedFavoriteProductList.contains(product)) {
+		if (!updatedFavoriteProductList.contains(productRepository.findById(newId).get())) {
 			updatedFavoriteProductList.add(product);
 		}
 		else {

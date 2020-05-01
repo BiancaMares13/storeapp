@@ -13,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 
 import lombok.Data;
 
@@ -54,12 +58,13 @@ public class User {
 
 	@Column
 	private UserRole userRole;
-	
+
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
       cascade = CascadeType.ALL)
   private List<Order> order;
-  
-  @OneToMany()
+
+  @ManyToMany()
+  @JoinTable(name = "favorite_product_list", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private List<Product> favoriteProductList;
 
 	public User() {}
