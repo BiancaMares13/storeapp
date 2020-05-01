@@ -51,6 +51,7 @@ public class ProductService {
 			throw new InvalidInputDataException(
 				"Product Category has to be between 3 and 30 characters long!");
 		}
+		product.setDeleted(false);
 		return productRepository.save(product);
 	}
 
