@@ -45,11 +45,14 @@ public class Product {
 	@Column
 	private long productStock;
 
+	@Column
+	private boolean deleted;
+
 
 	@ElementCollection
 	private List<String> imageList;
 
-	
+
 	public Product() {}
 
 	public Product(String productName, String productDescription,
