@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -25,6 +27,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "orders")
+@EqualsAndHashCode(exclude = {"user","productList"})
 public class Order {
 
 	@Id
@@ -40,6 +43,7 @@ public class Order {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnoreProperties("order")
 	private User user;
 
 	@ManyToMany

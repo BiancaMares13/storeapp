@@ -35,9 +35,7 @@ public class OrderController {
 	public ResponseEntity<List<Order>> findOrdersByUserId(@PathVariable("id") long id)
 	{
 		List<Order> orders = orderService.findOrdersByUser(id);
-		for(Order o: orders){
-			o.setUser(null);
-		}
+
 		return new ResponseEntity<>(orders, HttpStatus.OK);
 	}
 

@@ -18,11 +18,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(exclude ={ "order","favoriteProductList"})
 public class User {
 
 	@Id
@@ -61,6 +64,7 @@ public class User {
 
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
       cascade = CascadeType.ALL)
+  @JsonIgnoreProperties("users")
   private List<Order> order;
 
   @ManyToMany()
