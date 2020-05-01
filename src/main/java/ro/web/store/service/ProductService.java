@@ -92,7 +92,7 @@ public class ProductService {
 	}
 
 	public List<Product> findAllProducts() throws EntityNotFoundException {
-		List<Product> products = productRepository.findAll();
+		List<Product> products = productRepository.findByDeleted(false);
 		if (products.isEmpty()) {
 			throw new EntityNotFoundException(
 				"Could not find any product in the database");
@@ -101,7 +101,8 @@ public class ProductService {
 	}
 
 	public List<Product> findByProductCategory(String productCategory) {
-		return productRepository.findByProductCategory(productCategory);
+
+		return productRepository.findByProductCategoryAndDeleted(productCategory,false);
 	}
 
 	public Product findProductById(long id) throws EntityNotFoundException {

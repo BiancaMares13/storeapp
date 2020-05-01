@@ -71,7 +71,7 @@ public class ProductServiceTest {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
 			"mese", 5);
-		
+
 		when(productValidator.isProductnameUnique(ArgumentMatchers.anyString()))
 		.thenReturn(true);
 
@@ -129,8 +129,8 @@ public class ProductServiceTest {
 
 		productService.findByProductCategory(product.getProductCategory());
 
-		verify(productRepository, times(1)).findByProductCategory(product
-			.getProductCategory());
+		verify(productRepository, times(1)).findByProductCategoryAndDeleted(product
+			.getProductCategory(),false);
 	}
 
 	@Test

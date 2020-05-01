@@ -11,7 +11,9 @@ import ro.web.store.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-	List<Product> findByProductCategory(String productCategory);
-	
+	List<Product> findByProductCategoryAndDeleted(String productCategory,boolean isDeleted);
+
+	List<Product> findByDeleted(boolean isDeleted);
+
 	Product findByProductName(String productname);
 }
