@@ -64,11 +64,11 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(UnableToModifyDataException.class)
-	@ResponseStatus(HttpStatus.NOT_MODIFIED)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<ApiError> unableToModifyEntry(
 			UnableToModifyDataException unableToModifyDataException)
 	{
-		return createResponseEntity(HttpStatus.NOT_MODIFIED,
+		return createResponseEntity(HttpStatus.BAD_REQUEST,
 				unableToModifyDataException);
 	}
 

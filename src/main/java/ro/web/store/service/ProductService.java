@@ -96,7 +96,7 @@ public class ProductService {
 				"Product was already deleted from the database!");
 	}
 	product.setDeleted(true);	
-	return product;
+	return productRepository.save(product);
 	}
 
 	public List<Product> findAllProducts() throws EntityNotFoundException {

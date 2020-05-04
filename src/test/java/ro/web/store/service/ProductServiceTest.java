@@ -24,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 
 import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.exception.InvalidInputDataException;
+import ro.web.store.exception.UnableToModifyDataException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
 import ro.web.store.validator.ProductValidator;
@@ -83,7 +84,7 @@ public class ProductServiceTest {
 	}
 
 	@Test
-	public void deleteProductTest() {
+	public void deleteProductTest() throws UnableToModifyDataException {
 
 		productService.deleteProductById(1);
 		verify(productRepository, times(1)).deleteById(1L);
