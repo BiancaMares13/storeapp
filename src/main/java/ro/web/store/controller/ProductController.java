@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.exception.InvalidInputDataException;
+import ro.web.store.exception.UnableToModifyDataException;
 import ro.web.store.model.Product;
 import ro.web.store.service.ProductService;
 
@@ -41,42 +42,33 @@ public class ProductController {
 		return new ResponseEntity<>(newProduct, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Product> deleteProductById(@PathVariable("id") long id){
-		productService.deleteProductById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+	@PostMapping("/deleteProductById/{id}")
+	public ResponseEntity<Product> deleteProductById(@PathVariable("id") long id) throws UnableToModifyDataException {
+		Product newProduct =productService.deleteProductById(id);
+		return new ResponseEntity<>(newProduct,HttpStatus.OK);
 	}
 
 	@GetMapping("/findAllProducts")
-	public ResponseEntity<List<Product>> findAllProducts()
-		throws EntityNotFoundException
-	{
+	public ResponseEntity<List<Product>> findAllProducts() throws EntityNotFoundException {
 		List<Product> productList = productService.findAllProducts();
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
 
 	@GetMapping("/findByProductCategory")
 	@ResponseBody
-	public ResponseEntity<List<Product>> findByProductCategory(
-		@RequestParam String productCategory)
-	{
-		List<Product> productList = productService.findByProductCategory(
-			productCategory);
+	public ResponseEntity<List<Product>> findByProductCategory(@RequestParam String productCategory) {
+		List<Product> productList = productService.findByProductCategory(productCategory);
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Product> findProductById(@PathVariable("id") long id)
-		throws EntityNotFoundException
-	{
+	public ResponseEntity<Product> findProductById(@PathVariable("id") long id) throws EntityNotFoundException {
 		Product product = productService.findProductById(id);
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
 
 	@GetMapping("/findAllCategories")
-	public ResponseEntity<Set<String>> findAllCategories()
-		throws EntityNotFoundException
-	{
+	public ResponseEntity<Set<String>> findAllCategories() throws EntityNotFoundException {
 
 		Set<String> categoryList = productService.findAllProductCategories();
 		return new ResponseEntity<>(categoryList, HttpStatus.OK);

@@ -53,5 +53,23 @@ public class GlobalExceptionHandler {
 		return createResponseEntity(HttpStatus.BAD_REQUEST,
 			invalidInputDataException);
 	}
+	
+	@ExceptionHandler(DuplicateEntryException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public ResponseEntity<ApiError> duplicateEntry(
+			DuplicateEntryException duplicateEntryException)
+	{
+		return createResponseEntity(HttpStatus.CONFLICT,
+				duplicateEntryException);
+	}
+	
+	@ExceptionHandler(UnableToModifyDataException.class)
+	@ResponseStatus(HttpStatus.NOT_MODIFIED)
+	public ResponseEntity<ApiError> unableToModifyEntry(
+			UnableToModifyDataException unableToModifyDataException)
+	{
+		return createResponseEntity(HttpStatus.NOT_MODIFIED,
+				unableToModifyDataException);
+	}
 
 }

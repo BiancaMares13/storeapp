@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.exception.InvalidInputDataException;
+import ro.web.store.exception.UnableToModifyDataException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
 import ro.web.store.validator.ProductValidator;
@@ -88,8 +89,14 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 
-	public void deleteProductById(long id) {
-		productRepository.deleteById(id);
+	public Product deleteProductById(long id)throws UnableToModifyDataException {
+		Product product =	productRepository.findById(id).get();
+		if(product.isDeleted()==true) {
+		  throw new UnableToModifyDataException(
+				"Product was already deleted from the database!");
+	}
+	product.setDeleted(true);	
+	return product;
 	}
 
 	public List<Product> findAllProducts() throws EntityNotFoundException {
