@@ -11,7 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,7 +66,7 @@ public class OrderControllerTest {
 		Product product2 = new Product("masa de cafeaua", "masa mare", 50000, "link///photo",
 			"mese", 5);
 		
-		List<Product> productList = new ArrayList<>();
+		Set<Product> productList = new HashSet<>();
 		productList.add(product);	
 		productList.add(product2);
 		

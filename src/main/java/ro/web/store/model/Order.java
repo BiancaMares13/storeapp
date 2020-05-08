@@ -3,6 +3,7 @@ package ro.web.store.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,9 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -46,11 +50,12 @@ public class Order {
 	@JsonIgnoreProperties("order")
 	private User user;
 
+
 	@ManyToMany
 	@JoinTable(name = "list_of_products", joinColumns = @JoinColumn(
 		name = "order_id"), inverseJoinColumns = @JoinColumn(
 			name = "product_id"))
-	private List<Product> productList;
+	private Set<Product> productList;
 
 	@Column
 	private double total;
@@ -63,7 +68,7 @@ public class Order {
 	public Order() {}
 
 	public Order(String unic_identity_code, OrderStatus status, User user,
-		List<Product> productList, double total, Date completedOn)
+		Set<Product> productList, double total, Date completedOn)
 	{
 
 		this.unic_identity_code = unic_identity_code;

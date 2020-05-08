@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ro.web.store.exception.DuplicateEntryException;
 import ro.web.store.model.Order;
 import ro.web.store.model.OrderStatus;
+import ro.web.store.model.Product;
+import ro.web.store.model.User;
 import ro.web.store.service.OrderService;
 
 @Controller
@@ -52,5 +55,14 @@ public class OrderController {
 	{
 		List<Order> order = orderService.geAllOrdersByUserId(id);
 		return new ResponseEntity<>(order, HttpStatus.OK);
+	}
+	
+	@PostMapping("/addProductToOrder/{id}")
+	@ResponseBody
+	public ResponseEntity<?> addProductToOrder(@PathVariable("id") long id,
+		@RequestBody Product product) throws  DuplicateEntryException
+	{
+		orderService.addProductToOrder(id, product);
+		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 }
