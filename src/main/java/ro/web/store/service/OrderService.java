@@ -1,6 +1,9 @@
 
 package ro.web.store.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +29,6 @@ public class OrderService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -68,26 +70,33 @@ public class OrderService {
 
 		return orderRepository.findByUser(user.get());
 	}
-	
 
-	public Order addProductToOrder(long id,Product product) {		
-		Order order = orderRepository.findOrderByUserIdAndStatus(id, OrderStatus.IN_CART);
-		User user=userRepository.findById(id).get();
+	public Order addProductToOrder(long id, Product product) {
+		Order order = orderRepository.findOrderByUserIdAndStatus(id,
+			OrderStatus.IN_CART);
+		User user = userRepository.findById(id).get();
 
-		if(order !=null) {
-			Set<Product> productList= order.getProductList();	
-		    	productList.add(product);
-		    	order.setProductList(productList);
+		if (order != null) {
+			Set<Product> productList = order.getProductList();
+			productList.add(product);
+			order.setProductList(productList);
 			return orderRepository.save(order);
-			
-			}
-		
-			Order newOrder = new Order();
-			newOrder.setStatus(OrderStatus.IN_CART);
-			newOrder.setUser(user);
-			Set<Product> newProductList = new HashSet<>();
-			newProductList.add(product);
-			newOrder.setProductList(newProductList);
-			return orderRepository.save(newOrder);   	
+		}
+
+		Order newOrder = new Order();
+		newOrder.setStatus(OrderStatus.IN_CART);
+		newOrder.setUser(user);
+		newOrder.setUnic_identity_code(generateRandomString());
+		newOrder.setCompletedOn(Date.valueOf((LocalDate.now())));
+		Set<Product> newProductList = new HashSet<>();
+		newProductList.add(product);
+		newOrder.setProductList(newProductList);
+		return orderRepository.save(newOrder);
 	}
+
+	public String generateRandomString() {
+		String s = String.valueOf(System.currentTimeMillis());
+		return s.substring(5, s.length());
+	}
+
 }

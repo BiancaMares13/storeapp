@@ -22,8 +22,6 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -31,7 +29,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "orders")
-@EqualsAndHashCode(exclude = {"user","productList"})
+@EqualsAndHashCode(exclude = { "user", "productList" })
 public class Order {
 
 	@Id
@@ -44,17 +42,14 @@ public class Order {
 	@Column()
 	private OrderStatus status;
 
-
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnoreProperties("order")
 	private User user;
 
-
 	@ManyToMany
 	@JoinTable(name = "list_of_products", joinColumns = @JoinColumn(
-		name = "order_id"), inverseJoinColumns = @JoinColumn(
-			name = "product_id"))
+		name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private Set<Product> productList;
 
 	@Column
