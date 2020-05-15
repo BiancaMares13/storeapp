@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -97,6 +98,23 @@ public class OrderService {
 	public String generateRandomString() {
 		String s = String.valueOf(System.currentTimeMillis());
 		return s.substring(5, s.length());
+	}
+
+	public Order removeProductfromOrder(long id, Product product) {
+		Order order = orderRepository.findOrderByUserIdAndStatus(id,
+			OrderStatus.IN_CART);
+
+		if (order != null) {
+			Set<Product> productList = order.getProductList();
+			Iterator<Product> i = productList.iterator();
+			while (i.hasNext()) {
+				Product o = i.next();
+				if (product.getId()==o.getId()) 
+					i.remove();
+			}
+			order.setProductList(productList);
+		}
+		return orderRepository.save(order);
 	}
 
 }
