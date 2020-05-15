@@ -3,8 +3,6 @@ package ro.web.store.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -109,12 +107,21 @@ public class OrderService {
 			Iterator<Product> i = productList.iterator();
 			while (i.hasNext()) {
 				Product o = i.next();
-				if (product.getId()==o.getId()) 
-					i.remove();
+				if (product.getId() == o.getId()) i.remove();
 			}
 			order.setProductList(productList);
 		}
 		return orderRepository.save(order);
 	}
 
+	public Order getShoppingCart(long id) {
+
+		Order order = orderRepository.findOrderByUserIdAndStatus(id,
+			OrderStatus.IN_CART);
+
+		if (order != null) {
+			return order;
+		}
+		return null;
+	}
 }

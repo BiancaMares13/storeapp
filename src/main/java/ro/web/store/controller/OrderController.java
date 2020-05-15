@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.web.store.exception.DuplicateEntryException;
@@ -35,7 +36,8 @@ public class OrderController {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<List<Order>> findOrdersByUserId(@PathVariable("id") long id)
+	public ResponseEntity<List<Order>> findOrdersByUserId(
+		@PathVariable("id") long id)
 	{
 		List<Order> orders = orderService.findOrdersByUser(id);
 
@@ -44,34 +46,43 @@ public class OrderController {
 
 	@PostMapping(path = "/updateOrderStatus/{id}")
 	@ResponseBody
-	public ResponseEntity<Order> updateOrderStatus(@PathVariable("id") long id, @RequestBody OrderStatus orderStatus)
+	public ResponseEntity<Order> updateOrderStatus(@PathVariable("id") long id,
+		@RequestBody OrderStatus orderStatus)
 	{
 		Order order = orderService.updateOrderStatus(id, orderStatus);
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
-	
+
 	@PostMapping(path = "/geAllOrdersByUserId/{id}")
-	public ResponseEntity<List<Order>> geAllOrdersByUserId(@PathVariable("id") long id)
+	public ResponseEntity<List<Order>> geAllOrdersByUserId(
+		@PathVariable("id") long id)
 	{
 		List<Order> order = orderService.geAllOrdersByUserId(id);
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/addProductToOrder/{id}")
 	@ResponseBody
 	public ResponseEntity<?> addProductToOrder(@PathVariable("id") long id,
-		@RequestBody Product product) throws  DuplicateEntryException
+		@RequestBody Product product) throws DuplicateEntryException
 	{
 		orderService.addProductToOrder(id, product);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/removeProductfromOrder/{id}")
 	@ResponseBody
 	public ResponseEntity<?> removeProductfromOrder(@PathVariable("id") long id,
-		@RequestBody Product product) throws  DuplicateEntryException
+		@RequestBody Product product) throws DuplicateEntryException
 	{
 		orderService.removeProductfromOrder(id, product);
 		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+
+	@GetMapping("/getShoppingCart/{id}")
+	@ResponseBody
+	public ResponseEntity<Order> getShoppingCart(@PathVariable("id") long id) {
+		Order order = orderService.getShoppingCart(id);
+		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
 }
