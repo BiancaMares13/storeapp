@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,12 @@ public class Order {
 	@Column()
 	private OrderStatus status;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false,
+		  cascade = {
+        CascadeType.PERSIST, 
+        CascadeType.MERGE,
+        CascadeType.REFRESH 
+    })
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnoreProperties("order")
 	private User user;

@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(exclude ={ "order","favoriteProductList"})
+@EqualsAndHashCode(exclude = { "order", "favoriteProductList" })
 public class User {
 
 	@Id
@@ -62,13 +61,15 @@ public class User {
 	@Column
 	private UserRole userRole;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-      cascade = CascadeType.ALL)
-  @JsonIgnoreProperties("users")
-  private List<Order> order;
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {
+		CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	@JsonIgnoreProperties("users")
+	private List<Order> order;
 
-  @ManyToMany()
-  @JoinTable(name = "favorite_product_list", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+		CascadeType.REFRESH })
+	@JoinTable(name = "favorite_product_list", joinColumns = @JoinColumn(
+		name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private List<Product> favoriteProductList;
 
 	public User() {}
