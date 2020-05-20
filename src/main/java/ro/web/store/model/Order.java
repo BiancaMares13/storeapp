@@ -21,6 +21,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.annotations.ApiModelProperty;
+
 import lombok.EqualsAndHashCode;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,9 +41,11 @@ public class Order {
 	private long id;
 
 	@Column(unique = true)
+	@ApiModelProperty(example = "12344321 <-- Unique")
 	private String unic_identity_code;
 
 	@Column()
+	@ApiModelProperty(example = "RECEIVED/ IN_PROGRESS/ DONE/ IN_CART")
 	private OrderStatus status;
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false,
@@ -51,11 +56,13 @@ public class Order {
     })
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnoreProperties("order")
+	@ApiModelProperty(example = "")
 	private User user;
 
 	@ManyToMany
 	@JoinTable(name = "list_of_products", joinColumns = @JoinColumn(
 		name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	@ApiModelProperty(example = "[]")
 	private Set<Product> productList;
 
 	@Column

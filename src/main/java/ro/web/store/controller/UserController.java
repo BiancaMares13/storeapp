@@ -38,11 +38,11 @@ public class UserController {
 	 * @throws InvalidInputDataException
 	 */
 	@PostMapping("/addUser")
-	public ResponseEntity<User> addUser(@RequestBody User u)
+	public ResponseEntity<User> addUser(@RequestBody User user)
 		throws InvalidInputDataException
 	{
-		u.setUserRole(UserRole.ROLE_USER);
-		User newUser = userService.addUser(u);
+		user.setUserRole(UserRole.ROLE_USER);
+		User newUser = userService.addUser(user);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 
