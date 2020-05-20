@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import ro.web.store.exception.DuplicateEntryException;
@@ -18,6 +19,7 @@ import ro.web.store.utils.UserUtils;
 import ro.web.store.validator.UserValidator;
 
 @Service
+@Cacheable("user")
 public class UserService {
 
 	@Autowired

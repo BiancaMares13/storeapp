@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import ro.web.store.model.Order;
@@ -21,6 +22,7 @@ import ro.web.store.repository.ProductRepository;
 import ro.web.store.repository.UserRepository;
 
 @Service
+@Cacheable("order")
 public class OrderService {
 
 	@Autowired
