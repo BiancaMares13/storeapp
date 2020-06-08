@@ -71,7 +71,7 @@ public class OrderController {
 	@PostMapping("/removeProductfromOrder/{id}")
 	@ResponseBody
 	public ResponseEntity<?> removeProductfromOrder(@PathVariable("id") long id,
-		@RequestBody Product product) throws DuplicateEntryException
+		@RequestBody Product product)
 	{
 		orderService.removeProductfromOrder(id, product);
 		return new ResponseEntity<>(HttpStatus.OK);
