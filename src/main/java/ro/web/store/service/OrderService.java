@@ -1,18 +1,9 @@
 
 package ro.web.store.service;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import ro.web.store.model.Order;
 import ro.web.store.model.OrderStatus;
 import ro.web.store.model.Product;
@@ -20,6 +11,10 @@ import ro.web.store.model.User;
 import ro.web.store.repository.OrderRepository;
 import ro.web.store.repository.ProductRepository;
 import ro.web.store.repository.UserRepository;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @Cacheable("order")

@@ -1,14 +1,9 @@
 
 package ro.web.store.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import ro.web.store.exception.DuplicateEntryException;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.model.Product;
@@ -17,6 +12,10 @@ import ro.web.store.repository.ProductRepository;
 import ro.web.store.repository.UserRepository;
 import ro.web.store.utils.UserUtils;
 import ro.web.store.validator.UserValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Cacheable("user")

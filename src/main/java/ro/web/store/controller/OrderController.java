@@ -81,6 +81,7 @@ public class OrderController {
 	@ResponseBody
 	public ResponseEntity<Order> getShoppingCart(@PathVariable("id") long id) {
 		Order order = orderService.getShoppingCart(id);
+		order.setUser(null);
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
 }

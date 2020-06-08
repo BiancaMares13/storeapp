@@ -1,12 +1,20 @@
 package ro.web.store.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import ro.web.store.ConfigTest;
+import ro.web.store.model.*;
+import ro.web.store.repository.OrderRepository;
+import ro.web.store.repository.ProductRepository;
+import ro.web.store.repository.UserRepository;
+import ro.web.store.service.OrderService;
+import ro.web.store.utils.MockMvcUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,28 +23,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import ro.web.store.model.Order;
-import ro.web.store.model.OrderStatus;
-import ro.web.store.model.Product;
-import ro.web.store.model.User;
-import ro.web.store.model.UserRole;
-import ro.web.store.repository.OrderRepository;
-import ro.web.store.repository.ProductRepository;
-import ro.web.store.repository.UserRepository;
-import ro.web.store.service.OrderService;
-import ro.web.store.utils.MockMvcUtils;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest()
 @DisplayName("Order Controller Test")
+@Import(ConfigTest.class)
 public class OrderControllerTest {
 
 	@Autowired
@@ -53,8 +51,7 @@ public class OrderControllerTest {
 
 	@MockBean
 	UserRepository userRepository;
-	
-	
+
 	
 	public Order simpleOrderForTest() throws ParseException {
 		
@@ -73,10 +70,8 @@ public class OrderControllerTest {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		
-		Order order = new Order("1", OrderStatus.DONE, user,
+		return new Order("1", OrderStatus.DONE, user,
 			productList, 10000.0, sdf.parse("2020-11-11 12:12:12"));
-		
-		return order;
 	}
 	
 	@Test

@@ -1,21 +1,20 @@
 
 package ro.web.store.service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import ro.web.store.exception.EntityNotFoundException;
 import ro.web.store.exception.InvalidInputDataException;
 import ro.web.store.exception.UnableToModifyDataException;
 import ro.web.store.model.Product;
 import ro.web.store.repository.ProductRepository;
 import ro.web.store.validator.ProductValidator;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Cacheable("product")
