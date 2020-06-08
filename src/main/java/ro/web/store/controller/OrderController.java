@@ -65,7 +65,7 @@ public class OrderController {
 		@RequestBody Product product) throws DuplicateEntryException
 	{
 		orderService.addProductToOrder(id, product);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/removeProductfromOrder/{id}")
@@ -74,7 +74,7 @@ public class OrderController {
 		@RequestBody Product product) throws DuplicateEntryException
 	{
 		orderService.removeProductfromOrder(id, product);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/getShoppingCart/{id}")
