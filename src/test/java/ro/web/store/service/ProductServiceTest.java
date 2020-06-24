@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 import io.qameta.allure.Description;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.MockitoAnnotations;
 
 import ro.web.store.exception.EntityNotFoundException;
@@ -76,29 +76,40 @@ public class ProductServiceTest {
 			"mese", 5, false);
 
 		when(productValidator.isProductnameUnique(ArgumentMatchers.anyString()))
-		.thenReturn(true);
+			.thenReturn(true);
 
-	 when(productValidator.isProductDataSizeCorrect(ArgumentMatchers.anyString(),
-		ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())).thenReturn(true);
+		when(productValidator.isProductDataSizeCorrect(ArgumentMatchers.anyString(),
+			ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())).thenReturn(true);
 
-	 
-	 
 		productService.updateProduct(product);
 		verify(productRepository, times(1)).save(product);
 	}
 
 	@Test
-	public void deleteProductTest() throws UnableToModifyDataException, EntityNotFoundException {
-		
+	public void deleteProductTest() throws UnableToModifyDataException,
+		EntityNotFoundException
+	{
+
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
 			"mese", 5, false);
-    
 
-		when(productRepository.findById(1L))
-		.thenReturn(Optional.of(product));
+		when(productRepository.findById(1L)).thenReturn(Optional.of(product));
 		productService.deleteProductById(1);
-		
+
 		verify(productRepository, times(1)).save(product);
+	}
+
+	@Test
+	public void deleteProductTest_EntityNotFoundExceptionTest() throws UnableToModifyDataException {
+		
+		Product product = new Product("masa", "masa mica", 10000, "link///photo",
+			"mese", 5, true);
+		when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+		
+		Assertions.assertThrows(UnableToModifyDataException.class, () -> {
+			productService.deleteProductById(1);
+		});
+
 	}
 
 	@Test
@@ -116,7 +127,6 @@ public class ProductServiceTest {
 		productList.add(product1);
 
 		when(productRepository.findByDeleted(false)).thenReturn(productList);
-		
 
 		// test
 		List<Product> newProductList = productService.findAllProducts();
@@ -144,7 +154,7 @@ public class ProductServiceTest {
 		productService.findByProductCategory(product.getProductCategory());
 
 		verify(productRepository, times(1)).findByProductCategoryAndDeleted(product
-			.getProductCategory(),false);
+			.getProductCategory(), false);
 	}
 
 	@Test
