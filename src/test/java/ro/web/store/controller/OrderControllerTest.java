@@ -59,9 +59,9 @@ public class OrderControllerTest {
 			"email@test.com", "adress Str.test, nr 6", "0700000000", UserRole.ROLE_USER);
 				
 		Product product = new Product("masa", "masa mare", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		Product product2 = new Product("masa de cafeaua", "masa mare", 50000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		
 		Set<Product> productList = new HashSet<>();
 		productList.add(product);	

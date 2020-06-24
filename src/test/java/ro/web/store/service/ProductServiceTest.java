@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import io.qameta.allure.Description;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import ro.web.store.exception.EntityNotFoundException;
@@ -52,7 +54,7 @@ public class ProductServiceTest {
 	public void addProductTest() throws InvalidInputDataException {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 
 		when(productValidator.isProductnameUnique(ArgumentMatchers.anyString()))
 			.thenReturn(true);
@@ -71,7 +73,7 @@ public class ProductServiceTest {
 	public void updateProductTest() throws InvalidInputDataException {
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 
 		when(productValidator.isProductnameUnique(ArgumentMatchers.anyString()))
 		.thenReturn(true);
@@ -79,15 +81,24 @@ public class ProductServiceTest {
 	 when(productValidator.isProductDataSizeCorrect(ArgumentMatchers.anyString(),
 		ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())).thenReturn(true);
 
+	 
+	 
 		productService.updateProduct(product);
 		verify(productRepository, times(1)).save(product);
 	}
 
 	@Test
-	public void deleteProductTest() throws UnableToModifyDataException {
+	public void deleteProductTest() throws UnableToModifyDataException, EntityNotFoundException {
+		
+		Product product = new Product("masa", "masa mica", 10000, "link///photo",
+			"mese", 5, false);
+    
 
+		when(productRepository.findById(1L))
+		.thenReturn(Optional.of(product));
 		productService.deleteProductById(1);
-		verify(productRepository, times(1)).deleteById(1L);
+		
+		verify(productRepository, times(1)).save(product);
 	}
 
 	@Test
@@ -96,20 +107,22 @@ public class ProductServiceTest {
 		List<Product> productList = new ArrayList<>();
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
+
 		Product product1 = new Product("masa1", "masa mica1", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 
 		productList.add(product);
 		productList.add(product1);
 
-		when(productRepository.findAll()).thenReturn(productList);
+		when(productRepository.findByDeleted(false)).thenReturn(productList);
+		
 
 		// test
 		List<Product> newProductList = productService.findAllProducts();
 
 		assertEquals(2, newProductList.size());
-		verify(productRepository, times(1)).findAll();
+		verify(productRepository, times(1)).findByDeleted(false);
 	}
 
 	@Test
@@ -126,7 +139,7 @@ public class ProductServiceTest {
 	@Test
 	public void findByProductCategoryTest() {
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 
 		productService.findByProductCategory(product.getProductCategory());
 
@@ -137,7 +150,7 @@ public class ProductServiceTest {
 	@Test
 	public void findProductByIdTest() throws EntityNotFoundException {
 		when(productRepository.findById(0L)).thenReturn(Optional.of(new Product(
-			"masa", "masa mica", 10000, "link///photo", "mese", 5)));
+			"masa", "masa mica", 10000, "link///photo", "mese", 5, false)));
 
 		Product product = productService.findProductById(0L);
 
@@ -168,13 +181,13 @@ public class ProductServiceTest {
 		List<Product> productList = new ArrayList<>();
 
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		Product product1 = new Product("masa de batut jnitele", "masa mare", 10000,
-			"link///photo", "mese", 5);
+			"link///photo", "mese", 5, false);
 		Product product2 = new Product("masa de portelan", "masa mare", 10000,
-			"link///photo", "mese", 5);
+			"link///photo", "mese", 5, false);
 		Product product3 = new Product("masa de fierar", "masa mare", 10000,
-			"link///photo", "mese", 5);
+			"link///photo", "mese", 5, false);
 
 		productList.add(product);
 		productList.add(product1);

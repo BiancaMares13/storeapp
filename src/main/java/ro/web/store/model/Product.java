@@ -64,7 +64,7 @@ public class Product {
 
 	public Product(String productName, String productDescription,
 		long productPrice, String productPhotoLink, String productCategory,
-		long productStock)
+		long productStock, boolean deleted)
 	{
 
 		this.productName = productName;
@@ -73,6 +73,7 @@ public class Product {
 		this.productPhotoLink = productPhotoLink;
 		this.productCategory = productCategory;
 		this.productStock = productStock;
+		this.deleted = deleted;
 	}
 
 }

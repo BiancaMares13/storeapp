@@ -56,7 +56,7 @@ public class ProductControllerTest {
 	public void addProductAPITest() throws Exception {
 			
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 				
 		when(productService.addProduct(any())).thenReturn(product);
 		
@@ -79,7 +79,7 @@ public class ProductControllerTest {
 	public void updateProductAPITest() throws Exception {
 			
 		Product product = new Product("masa", "masa mare", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 				
 		when(productService.updateProduct(any())).thenReturn(product);
 		
@@ -102,7 +102,7 @@ public class ProductControllerTest {
 	@Description("")
 	public void deleteProductAPITest() throws Exception 
 	{
-		mockMvc.perform(delete("/products/{id}", 0) )
+		mockMvc.perform(post("/products/deleteProductById/{id}", 0) )
       .andExpect(status().isOk());
 	}
 	
@@ -111,12 +111,12 @@ public class ProductControllerTest {
 	public void findAllProductsAPITest() throws Exception 
 	{
 		Product product = new Product("masa", "masa mare", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		Product product2 = new Product("masa de cafeaua", "masa mare", 50000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		
 		Product product3 = new Product("masa", "masa mare", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		
 		List<Product> productList = new ArrayList<>();
 		productList.add(product);	
@@ -169,9 +169,9 @@ public class ProductControllerTest {
 	public void findByProductCategoryAPITest() throws Exception {
 			
 		Product product = new Product("masa", "masa mare", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		Product product2 = new Product("masa de cafeaua", "masa mare", 50000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 		
 		List<Product> productList = new ArrayList<>();
 		productList.add(product);	
@@ -206,7 +206,7 @@ public class ProductControllerTest {
 	public void findProductByIdAPITest() throws Exception 
 	{
 		Product product = new Product("masa", "masa mica", 10000, "link///photo",
-			"mese", 5);
+			"mese", 5, false);
 				
 		when(productService.findProductById(0)).thenReturn(product);
 		
