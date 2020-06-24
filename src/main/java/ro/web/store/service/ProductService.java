@@ -2,6 +2,7 @@
 package ro.web.store.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.web.store.exception.EntityNotFoundException;
@@ -26,6 +27,7 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@CacheEvict(value="products", allEntries=true)
 	public Product addProduct(Product product) throws InvalidInputDataException {
 
 		if (!productValidator.isProductnameUnique(product.getProductName())) {
@@ -57,6 +59,7 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 
+	@CacheEvict(value="products", allEntries=true)
 	public Product updateProduct(Product product)
 		throws InvalidInputDataException
 	{
@@ -90,6 +93,7 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 
+	@CacheEvict(value="products", allEntries=true)
 	public Product deleteProductById(long id)throws UnableToModifyDataException {
 		Product product =	productRepository.findById(id).get();
 		if(product.isDeleted()==true) {
@@ -100,6 +104,7 @@ public class ProductService {
 	return productRepository.save(product);
 	}
 
+	@Cacheable("products")
 	public List<Product> findAllProducts() throws EntityNotFoundException {
 		List<Product> products = productRepository.findByDeleted(false);
 		if (products.isEmpty()) {
@@ -109,6 +114,7 @@ public class ProductService {
 		return products;
 	}
 
+	@Cacheable("products")
 	public List<Product> findByProductCategory(String productCategory) {
 
 		return productRepository.findByProductCategoryAndDeleted(productCategory,false);
@@ -124,6 +130,7 @@ public class ProductService {
 		return optionalProduct.get();
 	}
 
+	@Cacheable("products")
 	public Set<String> findAllProductCategories() throws EntityNotFoundException {
 		List<Product> products = productRepository.findAll();
 

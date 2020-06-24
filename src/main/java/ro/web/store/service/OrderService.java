@@ -2,6 +2,7 @@
 package ro.web.store.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.web.store.model.Order;
@@ -17,7 +18,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
-@Cacheable("order")
 public class OrderService {
 
 	@Autowired
@@ -29,6 +29,7 @@ public class OrderService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@CacheEvict(value="orders", allEntries=true)
 	public Order addOrder(Order order) {
 
 		Set<Product> productList = order.getProductList();
@@ -42,7 +43,8 @@ public class OrderService {
 
 		return orderRepository.save(order);
 	}
-
+	
+	@Cacheable("orders")
 	public List<Order> findOrdersByUser(long id) {
 
 		Optional<User> user = userRepository.findById(id);
@@ -50,6 +52,7 @@ public class OrderService {
 		return null;
 	}
 
+	@CacheEvict(value="orders", allEntries=true)
 	public Order updateOrderStatus(long id, OrderStatus orderStatus) {
 
 		Optional<Order> order = orderRepository.findById(id);
@@ -59,7 +62,7 @@ public class OrderService {
 
 		return orderRepository.save(order.get());
 	}
-
+	@Cacheable("orders")
 	public List<Order> geAllOrdersByUserId(long id) {
 
 		Optional<User> user = userRepository.findById(id);
@@ -67,6 +70,7 @@ public class OrderService {
 		return orderRepository.findByUser(user.get());
 	}
 
+	@CacheEvict(value="orders", allEntries=true)
 	public Order addProductToOrder(long id, Product product) {
 		Order order = orderRepository.findOrderByUserIdAndStatus(id,
 			OrderStatus.IN_CART);
@@ -95,6 +99,7 @@ public class OrderService {
 		return s.substring(5, s.length());
 	}
 
+	@CacheEvict(value="orders", allEntries=true)
 	public Order removeProductfromOrder(long id, Product product) {
 		Order order = orderRepository.findOrderByUserIdAndStatus(id,
 			OrderStatus.IN_CART);
@@ -111,6 +116,7 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 
+	@Cacheable("orders")
 	public Order getShoppingCart(long id) {
 
 		Order order = orderRepository.findOrderByUserIdAndStatus(id,

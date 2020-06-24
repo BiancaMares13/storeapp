@@ -2,6 +2,7 @@
 package ro.web.store.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ro.web.store.exception.DuplicateEntryException;
@@ -33,6 +34,7 @@ public class UserService {
 	@Autowired
 	private UserUtils userUtils;
 
+	@CacheEvict(value="users", allEntries=true)
 	public User addUser(User user) throws InvalidInputDataException {
 		if (!userValidator.isEmailValid(user.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
@@ -77,11 +79,13 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	@Cacheable("users")
 	public User findByUserId(long id) {
 		Optional<User> user = userRepository.findById(id);
 		return user.get();
 	}
 
+	@CacheEvict(value="users", allEntries=true)
 	public User updateUser(User user) throws InvalidInputDataException {
 		if (!userValidator.isEmailValid(user.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
@@ -99,14 +103,17 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	@CacheEvict(value="users", allEntries=true)
 	public void deleteUserById(long id) {
 		userRepository.deleteById(id);
 	}
 
+	@Cacheable("users")
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 
+	@CacheEvict(value="users", allEntries=true)
 	public User addProductToFavorites(long id, Product product)
 		throws DuplicateEntryException
 	{
@@ -130,6 +137,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	@CacheEvict(value="users", allEntries=true)
 	public User removeProductFromFavorites(long id, Product product) {
 		User user = findByUserId(id);
 		List<Product> updatedFavoriteProductList = new ArrayList<>();
@@ -142,6 +150,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	@Cacheable("users")
 	public List<Product> getAllFavoriteProducts(long id) {
 		User user = findByUserId(id);
 		return user.getFavoriteProductList();
