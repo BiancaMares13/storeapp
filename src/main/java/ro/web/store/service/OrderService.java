@@ -29,7 +29,6 @@ public class OrderService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@CacheEvict(value="orders", allEntries=true)
 	public Order addOrder(Order order) {
 
 		Set<Product> productList = order.getProductList();
@@ -43,16 +42,15 @@ public class OrderService {
 
 		return orderRepository.save(order);
 	}
-	
-	@Cacheable("orders")
+
 	public List<Order> findOrdersByUser(long id) {
 
 		Optional<User> user = userRepository.findById(id);
-		if (user.isPresent()) return orderRepository.findByUser(user.get());
+		if (user.isPresent())
+			return orderRepository.findByUser(user.get());
 		return null;
 	}
 
-	@CacheEvict(value="orders", allEntries=true)
 	public Order updateOrderStatus(long id, OrderStatus orderStatus) {
 
 		Optional<Order> order = orderRepository.findById(id);
@@ -62,7 +60,7 @@ public class OrderService {
 
 		return orderRepository.save(order.get());
 	}
-	@Cacheable("orders")
+
 	public List<Order> geAllOrdersByUserId(long id) {
 
 		Optional<User> user = userRepository.findById(id);
@@ -70,10 +68,8 @@ public class OrderService {
 		return orderRepository.findByUser(user.get());
 	}
 
-	@CacheEvict(value="orders", allEntries=true)
 	public Order addProductToOrder(long id, Product product) {
-		Order order = orderRepository.findOrderByUserIdAndStatus(id,
-			OrderStatus.IN_CART);
+		Order order = orderRepository.findOrderByUserIdAndStatus(id, OrderStatus.IN_CART);
 		User user = userRepository.findById(id).get();
 
 		if (order != null) {
@@ -99,28 +95,25 @@ public class OrderService {
 		return s.substring(5, s.length());
 	}
 
-	@CacheEvict(value="orders", allEntries=true)
 	public Order removeProductfromOrder(long id, Product product) {
-		Order order = orderRepository.findOrderByUserIdAndStatus(id,
-			OrderStatus.IN_CART);
+		Order order = orderRepository.findOrderByUserIdAndStatus(id, OrderStatus.IN_CART);
 
 		if (order != null) {
 			Set<Product> productList = order.getProductList();
 			Iterator<Product> i = productList.iterator();
 			while (i.hasNext()) {
 				Product o = i.next();
-				if (product.getId() == o.getId()) i.remove();
+				if (product.getId() == o.getId())
+					i.remove();
 			}
 			order.setProductList(productList);
 		}
 		return orderRepository.save(order);
 	}
 
-	@Cacheable("orders")
 	public Order getShoppingCart(long id) {
 
-		Order order = orderRepository.findOrderByUserIdAndStatus(id,
-			OrderStatus.IN_CART);
+		Order order = orderRepository.findOrderByUserIdAndStatus(id, OrderStatus.IN_CART);
 
 		if (order != null) {
 			return order;

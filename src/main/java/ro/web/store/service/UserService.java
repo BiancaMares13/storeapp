@@ -19,14 +19,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Cacheable("user")
 public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
 
-  @Autowired
-  private ProductRepository productRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Autowired
 	private UserValidator userValidator;
@@ -34,14 +33,12 @@ public class UserService {
 	@Autowired
 	private UserUtils userUtils;
 
-	@CacheEvict(value="users", allEntries=true)
 	public User addUser(User user) throws InvalidInputDataException {
 		if (!userValidator.isEmailValid(user.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
 		}
 		if (!userValidator.isUserDataSizeCorrect(user.getEmail(), 3, 30)) {
-			throw new InvalidInputDataException(
-				"Provided Email has to be between 3 and 30 characters long!");
+			throw new InvalidInputDataException("Provided Email has to be between 3 and 30 characters long!");
 		}
 		if (!userValidator.isUsernameValid(user.getUsername())) {
 			throw new InvalidInputDataException("invalid username format!");
@@ -50,28 +47,23 @@ public class UserService {
 			throw new InvalidInputDataException("usename is already used!");
 		}
 		if (!userValidator.isUserDataSizeCorrect(user.getUsername(), 3, 30)) {
-			throw new InvalidInputDataException(
-				"Username has to be between 3 and 30 characters long!");
+			throw new InvalidInputDataException("Username has to be between 3 and 30 characters long!");
 		}
 		if (!userValidator.isUserDataSizeCorrect(user.getName(), 3, 30)) {
-			throw new InvalidInputDataException(
-				"Name has to be between 3 and 30 characters long!");
+			throw new InvalidInputDataException("Name has to be between 3 and 30 characters long!");
 		}
 		if (!userValidator.isUserDataSizeCorrect(user.getSurname(), 3, 30)) {
-			throw new InvalidInputDataException(
-				"Surname has to be between 3 and 30 characters long!");
+			throw new InvalidInputDataException("Surname has to be between 3 and 30 characters long!");
 		}
 
 		if (!userValidator.isUserDataSizeCorrect(user.getAdress(), 3, 300)) {
-			throw new InvalidInputDataException(
-				"Adress has to be between 3 and 300 characters long!");
+			throw new InvalidInputDataException("Adress has to be between 3 and 300 characters long!");
 		}
 		if (!userValidator.isPhoneNumberValid(user.getPhoneNumber())) {
 			throw new InvalidInputDataException("invalid phone number format!");
 		}
 		if (!userValidator.isUserDataSizeCorrect(user.getPhoneNumber(), 10, 15)) {
-			throw new InvalidInputDataException(
-				"Phone number has to be between 10 and 15 characters long!");
+			throw new InvalidInputDataException("Phone number has to be between 10 and 15 characters long!");
 		}
 
 		user.setPassword(userUtils.encryptPassword(user.getPassword()));
@@ -79,13 +71,11 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	@Cacheable("users")
 	public User findByUserId(long id) {
 		Optional<User> user = userRepository.findById(id);
 		return user.get();
 	}
 
-	@CacheEvict(value="users", allEntries=true)
 	public User updateUser(User user) throws InvalidInputDataException {
 		if (!userValidator.isEmailValid(user.getEmail())) {
 			throw new InvalidInputDataException("invalid email format!");
@@ -103,33 +93,27 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	@CacheEvict(value="users", allEntries=true)
 	public void deleteUserById(long id) {
 		userRepository.deleteById(id);
 	}
 
-	@Cacheable("users")
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 
-	@CacheEvict(value="users", allEntries=true)
-	public User addProductToFavorites(long id, Product product)
-		throws DuplicateEntryException
-	{
+	public User addProductToFavorites(long id, Product product) throws DuplicateEntryException {
 		User user = findByUserId(id);
 		List<Product> updatedFavoriteProductList = new ArrayList<>();
 
-	long newId =	product.getId();
-	productRepository.findById(newId);
+		long newId = product.getId();
+		productRepository.findById(newId);
 
 		if (!user.getFavoriteProductList().equals(null)) {
 			updatedFavoriteProductList = user.getFavoriteProductList();
 		}
 		if (!updatedFavoriteProductList.contains(productRepository.findById(newId).get())) {
 			updatedFavoriteProductList.add(product);
-		}
-		else {
+		} else {
 			throw new DuplicateEntryException("Product already added to Favorites!");
 		}
 		user.setFavoriteProductList(updatedFavoriteProductList);
@@ -137,7 +121,6 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	@CacheEvict(value="users", allEntries=true)
 	public User removeProductFromFavorites(long id, Product product) {
 		User user = findByUserId(id);
 		List<Product> updatedFavoriteProductList = new ArrayList<>();
@@ -150,7 +133,6 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	@Cacheable("users")
 	public List<Product> getAllFavoriteProducts(long id) {
 		User user = findByUserId(id);
 		return user.getFavoriteProductList();
